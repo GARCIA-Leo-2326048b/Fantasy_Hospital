@@ -2,6 +2,9 @@ package Creatures;
 
 import Maladies.Maladie;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public abstract class  Creature {
 
     private String nom;
@@ -10,19 +13,20 @@ public abstract class  Creature {
     private float taille;
     private int age;
     private int moral;
-    private Maladie[] maladies;
+    private List<Maladie> maladies;
 
 
-    public Creature (String nom,String sexe,float poids,float taille,int age,int moral,Maladie[] maladies) {
+    public Creature (String nom,String sexe,float poids,float taille,int age,int moral) {
         this.nom = nom;
         this.age=age;
         this.sexe = sexe;
         this.moral = moral;
-        this.maladies = maladies;
+        this.maladies = new ArrayList<>();
         this.poids = poids;
         this.taille = taille;
 
     }
+
 
     public String getSexe() {
         return sexe;
@@ -57,31 +61,53 @@ public abstract class  Creature {
     }
 
 
-    public Maladie[] getMaladies() {
+    public List<Maladie> getMaladies() {
         return maladies;
     }
 
-    public void setMaladies(Maladie[] maladies) {
-        this.maladies = maladies;
-    }
 
     public void attendre(){
+        moral -= 10;
+        if (moral < 0) moral = 0;
+        System.out.println(nom + " attend, le moral diminue à " + moral + ".");
 
     }
 
     public void hurler(){
 
-    }
-    public void seEmporter(){
+        System.out.println(nom + " hurle de désespoir !");
+
 
     }
-    public void tomberMalade(){
+    public void sEmporter(){
+
+        System.out.println(nom + " s'emporte de rage !");
 
     }
-    public void guerir(){
+    public void tomberMalade(Maladie maladie){
+        maladies.add(maladie);
+
+    }
+    public void guerir(Maladie maladie){
+        maladies.remove(maladie);
+        moral += 10;
+        if (moral > 100) moral = 100;
+        System.out.println(nom + " a été soigné de " + maladie.getNomComplet() + ". Moral: " + moral);
 
     }
     public void trepasser(){
+
+    }
+
+    public void actionCreature(){
+        //gere les actions des cratures
+        if (moral == 0){
+            hurler();
+        }
+        if(maladies.size() > 5){
+            trepasser();
+        }
+        //a completer
 
     }
 }
