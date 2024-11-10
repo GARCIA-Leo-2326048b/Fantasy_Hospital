@@ -99,7 +99,7 @@ public abstract class  Creature {
 
     }
 
-    public void actionCreature(){
+    public void actionCreature(Maladie maladie){
         //gere les actions des cratures
         if (moral == 0){
             hurler();
@@ -107,7 +107,10 @@ public abstract class  Creature {
         if(maladies.size() > 5){
             trepasser();
         }
-        //a completer
+        if(maladies.size() < 5){
+            tomberMalade(maladie);
+        }
+        //
 
     }
 }

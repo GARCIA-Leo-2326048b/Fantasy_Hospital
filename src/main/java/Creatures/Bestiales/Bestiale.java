@@ -1,4 +1,6 @@
-package Creatures;
+package Creatures.Bestiales;
+
+import Creatures.Creature;
 
 public interface Bestiale {
 
