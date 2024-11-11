@@ -74,9 +74,9 @@ public abstract class  Creature {
     }
 
     public void hurler(){
-
-        System.out.println(nom + " hurle de désespoir !");
-
+        if (moral == 0) {
+            System.out.println(nom + " hurle de désespoir !");
+        }
 
     }
     public void sEmporter(){
@@ -85,8 +85,9 @@ public abstract class  Creature {
 
     }
     public void tomberMalade(Maladie maladie){
-        maladies.add(maladie);
-
+        if(maladies.size() < 5) {
+            maladies.add(maladie);
+        }
     }
     public void guerir(Maladie maladie){
         maladies.remove(maladie);
@@ -95,22 +96,13 @@ public abstract class  Creature {
         System.out.println(nom + " a été soigné de " + maladie.getNomComplet() + ". Moral: " + moral);
 
     }
-    public void trepasser(){
+    public void trepasser(Maladie maladie){
 
     }
 
     public void actionCreature(Maladie maladie){
         //gere les actions des cratures
-        if (moral == 0){
-            hurler();
-        }
-        if(maladies.size() > 5){
-            trepasser();
-        }
-        if(maladies.size() < 5){
-            tomberMalade(maladie);
-        }
-        //
+
 
     }
 }

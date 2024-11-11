@@ -1,27 +1,80 @@
 package ServicesMedicaux;
 
 import Creatures.Creature;
+import Maladies.Maladie;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class ServiceMedical {
     private String nom;
-    private float superficie;
-    private final int NB_CREAT_MAX;
+    private double superficie;
+    private final int CAPACITE_MAX;
     private List<Creature> creatures;
-    private int nbCreatures;
-    private float budget;
+    private String budget;
 
-    public ServiceMedical(String nom, float superficie, int nbCreatures, float budget ) {
+    public ServiceMedical(String nom, double superficie,  String budget) {
         this.nom = nom;
         this.superficie = superficie;
-        this.NB_CREAT_MAX = 20;
-        this.nbCreatures = nbCreatures;
-        this.budget = budget;
+        this.CAPACITE_MAX = 15;
         this.creatures = new ArrayList<>();
+        this.budget = budget;
     }
 
+    public String getNom() {
+        return nom;
+    }
 
+    public double getSuperficie() {
+        return superficie;
+    }
 
+    public int getCAPACITE_MAX() {
+        return CAPACITE_MAX;
+    }
+
+    public List<Creature> getCreatures() {
+        return creatures;
+    }
+
+    public String getBudget() {
+        return budget;
+    }
+
+    public void ajouterCreature(Creature creature) {
+        if (creatures.size() < CAPACITE_MAX) {
+            creatures.add(creature);
+            System.out.println(creature.getNom() + " a été ajouté(e) au service " + nom);
+        } else {
+            System.out.println("Le service " + nom + " est plein !");
+        }
+    }
+
+    public void enleverCreature(Creature creature) {
+        creatures.remove(creature);
+        System.out.println(creature.getNom() + " a été retiré(e) du service " + nom);
+    }
+
+    public void soignerCreatures(Maladie maladie) {
+        for (Creature creature : creatures) {
+            creature.guerir(maladie);
+        }
+    }
+
+    public void afficherCaracteristiques() {
+        System.out.println("Service : " + nom + ", Superficie : " + superficie + "m², Capacité : " + CAPACITE_MAX);
+        System.out.println("Budget : " + budget);
+        for (Creature creature : creatures) {
+            System.out.println(" - " + creature.getNom() + ", Moral : " + creature.getMoral());
+            // Parcours de la liste des maladies de chaque créature
+            System.out.println("   Maladies :");
+            for (Maladie maladie : creature.getMaladies()) {
+                System.out.println("     * " + maladie.getNomComplet() + " ( " + maladie.getNomAbrege() + "), Niveau : " + maladie.getNiveau() + "/" + maladie.getNiveauMax());
+            }
+        }
+    }
+
+    public void reviserBudget(String nouveauBudget){
+        budget = nouveauBudget;
+    }
 }

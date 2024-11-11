@@ -7,10 +7,10 @@ public class Maladie {
     private int niveau;
     private final int NIVEAU_MAX;
 
-    public Maladie(String nomComplet, String nomAbrege, int niveau) {
+    public Maladie(String nomComplet, String nomAbrege) {
         this.nomComplet = nomComplet;
         this.nomAbrege = nomAbrege;
-        this.niveau = niveau;
+        this.niveau = 0;
         this.NIVEAU_MAX = 10;
     }
 
@@ -25,20 +25,29 @@ public class Maladie {
     public int getNiveau() {
         return niveau;
     }
-
+    public int getNiveauMax() {
+        return NIVEAU_MAX;
+    }
     public void setNiveau(int niveau) {
         this.niveau = niveau;
     }
 
     public void augmenterNiveau(){
+        niveau ++;
+
 
     }
 
     public void diminuerNiveau(){
 
+        niveau--;
+
+
     }
 
-    public void maladieLetal(){
+    public boolean estLetal(){
+
+        return niveau==NIVEAU_MAX;
 
     }
 }

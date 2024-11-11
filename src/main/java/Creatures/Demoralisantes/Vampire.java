@@ -4,6 +4,8 @@ import Creatures.Bestiales.Bestiale;
 import Creatures.Creature;
 import Creatures.MortVivantes.MortVivant;
 
+import java.util.List;
+
 public class Vampire extends Creature implements Demoralisante, Bestiale, MortVivant {
     public Vampire(String nom, String sexe, float poids, float taille, int age, int moral) {
         super(nom, sexe, poids, taille, age, moral);
@@ -11,7 +13,7 @@ public class Vampire extends Creature implements Demoralisante, Bestiale, MortVi
 
     // Implémentation de la méthode demoraliser de l'interface Demoralisante
     @Override
-    public void demoraliser(Creature autreCreature) {
+    public void demoraliser(List<Creature> autresCreatures) {
 
     }
 
