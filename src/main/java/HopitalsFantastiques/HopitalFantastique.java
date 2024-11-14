@@ -5,6 +5,9 @@ import java.util.List;
 import Medecins.Medecin;
 import ServicesMedicaux.ServiceMedical;
 import Creatures.Creature;
+import Threads.MiseAJourCreatures;
+import Threads.MiseAJourServicesMedicaux;
+import Threads.TacheMedecin;
 
 public class HopitalFantastique {
     private String nom;
@@ -69,6 +72,20 @@ public class HopitalFantastique {
         System.out.println("Nombre total de créatures dans l'hôpital : " + nombreTotalCreatures());
     }
 
+    public static void main(String[] args) {
+        //CREATION DE L4HOPITAL
+        //HopitalFantastique hopital = new HopitalFantastique();
+        //Medecin medecin = new Medecin();
 
+        // Création des threads avec les tâches spécifiques
+        Thread threadCreatures = new Thread(new MiseAJourCreatures());
+        Thread threadServices = new Thread(new MiseAJourServicesMedicaux());
+        Thread threadMedecin = new Thread(new TacheMedecin());
+
+        // Démarrage des threads
+        threadCreatures.start();
+        threadServices.start();
+        threadMedecin.start();
+    }
 
 }

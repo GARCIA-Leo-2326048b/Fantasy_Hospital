@@ -34,8 +34,6 @@ public class Maladie {
 
     public void augmenterNiveau(){
         niveau ++;
-
-
     }
 
     public void diminuerNiveau(){
