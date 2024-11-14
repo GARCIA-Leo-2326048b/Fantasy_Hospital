@@ -11,12 +11,14 @@ public abstract class  Creature {
     private String sexe;
     private float poids;
     private float taille;
-    private int age;
+    private Age age;
     private int moral;
     private List<Maladie> maladies;
+    private int nombreHurlement = 0;
 
 
-    public Creature (String nom,String sexe,float poids,float taille,int age,int moral) {
+
+    public Creature (String nom,String sexe,float poids,float taille,Age age,int moral) {
         this.nom = nom;
         this.age=age;
         this.sexe = sexe;
@@ -44,7 +46,7 @@ public abstract class  Creature {
         this.moral = moral;
     }
 
-    public int getAge() {
+    public Age getAge() {
         return age;
     }
 
@@ -74,8 +76,13 @@ public abstract class  Creature {
     }
 
     public void hurler(){
-        if (moral == 0) {
+        if (moral == 0 && nombreHurlement < 10) {
             System.out.println(nom + " hurle de désespoir !");
+            nombreHurlement ++;
+        }
+        else if (nombreHurlement == 10) {
+            nombreHurlement = 0;
+            sEmporter();
         }
 
     }
