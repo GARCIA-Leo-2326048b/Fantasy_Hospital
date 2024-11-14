@@ -132,7 +132,7 @@ public abstract class  Creature {
             }
         }
         if (this instanceof MortVivant) {
-            ((MortVivant) this).regenerer(this);
+            ((MortVivant) this).regenerer(this, service);
         }
     }
 }

@@ -10,14 +10,8 @@ public interface Demoralisante {
 
     default void demoraliser(List<Creature> autresCreatures){
         for (Creature autreCreature : autresCreatures) {
-            autreCreature.diminuerMoral();
+            autreCreature.diminuerMoral(10);
         }
     }
 
-    default void trepasser(Creature creature, Maladie maladie, ServiceMedical service){
-        System.out.println(creature.getNom() +"trepasse !");
-        service.enleverCreature(creature);
-
-        demoraliser( service.getCreatures());
-    }
 }
