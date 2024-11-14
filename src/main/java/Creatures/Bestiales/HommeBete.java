@@ -1,6 +1,8 @@
 package Creatures.Bestiales;
 
 import Creatures.Creature;
+import Maladies.Maladie;
+import ServicesMedicaux.ServiceMedical;
 
 public class HommeBete extends Creature implements Bestiale{
 
@@ -8,8 +10,6 @@ public class HommeBete extends Creature implements Bestiale{
         super(nom, sexe, poids, taille, age, moral);
     }
 
-    @Override
-    public void contaminer(Creature autreCreature) {
 
-    }
+
 }

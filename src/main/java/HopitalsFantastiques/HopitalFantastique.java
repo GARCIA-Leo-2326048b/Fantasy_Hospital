@@ -68,4 +68,7 @@ public class HopitalFantastique {
         }
         System.out.println("Nombre total de créatures dans l'hôpital : " + nombreTotalCreatures());
     }
+
+
+
 }

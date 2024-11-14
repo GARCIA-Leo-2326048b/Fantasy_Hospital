@@ -1,6 +1,7 @@
 package ServicesMedicaux;
 
 import Creatures.Creature;
+import Creatures.TypeCreature;
 import Maladies.Maladie;
 
 import java.util.ArrayList;
@@ -42,7 +43,7 @@ public class ServiceMedical {
     }
 
     public void ajouterCreature(Creature creature) {
-        if (creatures.size() < CAPACITE_MAX) {
+        if (creatures.size() < CAPACITE_MAX ) {
             creatures.add(creature);
             System.out.println(creature.getNom() + " a été ajouté(e) au service " + nom);
         } else {

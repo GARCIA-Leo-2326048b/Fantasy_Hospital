@@ -1,6 +1,7 @@
 package Creatures.Demoralisantes;
 
 import Creatures.Creature;
+import Maladies.Maladie;
 
 import java.util.List;
 
@@ -11,8 +12,4 @@ public class Elfe extends Creature implements Demoralisante {
 
 
 
-    @Override
-    public void demoraliser(List<Creature> autresCreatures) {
-
-    }
 }

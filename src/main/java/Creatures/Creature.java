@@ -1,6 +1,10 @@
 package Creatures;
 
+import Creatures.Bestiales.Bestiale;
+import Creatures.Demoralisantes.Demoralisante;
+import Creatures.MortVivantes.MortVivant;
 import Maladies.Maladie;
+import ServicesMedicaux.ServiceMedical;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -60,6 +64,11 @@ public abstract class  Creature {
         return nom;
     }
 
+    public void diminuerMoral(){
+        moral -= 10;
+        if (moral < 0) moral = 0;
+    }
+
 
     public List<Maladie> getMaladies() {
         return maladies;
@@ -67,20 +76,20 @@ public abstract class  Creature {
 
 
     public void attendre(){
-        moral -= 10;
-        if (moral < 0) moral = 0;
+        diminuerMoral();
         System.out.println(nom + " attend, le moral diminue à " + moral + ".");
+        if(moral <= 0){
+            hurler();
+        }
+
 
     }
 
     public void hurler(){
-        if (moral == 0) {
-            System.out.println(nom + " hurle de désespoir !");
-        }
-
+        System.out.println(nom + " hurle de désespoir !");
     }
-    public void sEmporter(){
 
+    public void sEmporter(){
         System.out.println(nom + " s'emporte de rage !");
 
     }
@@ -96,13 +105,27 @@ public abstract class  Creature {
         System.out.println(nom + " a été soigné de " + maladie.getNomComplet() + ". Moral: " + moral);
 
     }
-    public void trepasser(Maladie maladie){
+    public void trepasser(Maladie maladie, ServiceMedical service){
+        System.out.println(nom +"trepasse !");
+        service.enleverCreature(this);
+
+        if (this instanceof Demoralisante) {
+            ((Demoralisante) this).demoraliser(service.getCreatures());
+        }
+        if (this instanceof Bestiale) {
+            Creature victime = service.getCreatures().isEmpty() ? null : service.getCreatures().get(0);
+            if (victime != null) {
+                ((Bestiale) this).contaminer(maladie, victime);
+            } else {
+                System.out.println("Aucune créature à contaminer.");
+            }
+        }
+        if (this instanceof MortVivant) {
+            ((MortVivant) this).regenerer(this);
+        }
 
     }
 
-    public void actionCreature(Maladie maladie){
-        //gere les actions des cratures
 
 
-    }
 }

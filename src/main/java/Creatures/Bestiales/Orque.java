@@ -1,6 +1,8 @@
 package Creatures.Bestiales;
 
 import Creatures.Creature;
+import Maladies.Maladie;
+import ServicesMedicaux.ServiceMedical;
 
 public class Orque extends Creature implements Bestiale {
 
@@ -9,8 +11,4 @@ public class Orque extends Creature implements Bestiale {
     }
 
 
-    @Override
-    public void contaminer(Creature autreCreature) {
-
-    }
 }

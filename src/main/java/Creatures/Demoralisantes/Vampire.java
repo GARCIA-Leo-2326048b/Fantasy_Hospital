@@ -11,20 +11,8 @@ public class Vampire extends Creature implements Demoralisante, Bestiale, MortVi
         super(nom, sexe, poids, taille, age, moral);
     }
 
-    // Implémentation de la méthode demoraliser de l'interface Demoralisante
-    @Override
-    public void demoraliser(List<Creature> autresCreatures) {
-
-    }
 
 
-    @Override
-    public void contaminer(Creature autreCreature) {
 
-    }
 
-    @Override
-    public void regenerer() {
-
-    }
 }
