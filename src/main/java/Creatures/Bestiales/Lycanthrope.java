@@ -2,10 +2,11 @@ package Creatures.Bestiales;
 
 import Creatures.Age;
 import Creatures.Creature;
+import Creatures.Triage.Triage;
 
 import java.util.ArrayList;
 
-public class Lycanthrope extends Creature implements Bestiale {
+public class Lycanthrope extends Creature implements Bestiale, Triage {
     int force;
     int facteurDomination;
     RangDomination rangDomination;

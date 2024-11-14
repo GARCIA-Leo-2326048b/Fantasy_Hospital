@@ -3,6 +3,8 @@ package Creatures;
 import Creatures.Bestiales.Bestiale;
 import Creatures.Demoralisantes.Demoralisante;
 import Creatures.MortVivantes.MortVivant;
+import Creatures.Triage.Triage;
+import Creatures.VIP.VIP;
 import Maladies.Maladie;
 import ServicesMedicaux.ServiceMedical;
 
@@ -58,16 +60,13 @@ public abstract class  Creature {
         return poids;
     }
 
-    public void setPoids(float poids) {
-        this.poids = poids;
-    }
 
     public String getNom() {
         return nom;
     }
 
-    public void diminuerMoral(){
-        moral -= 10;
+    public void diminuerMoral( int points){
+        moral -= points;
         if (moral < 0) moral = 0;
     }
 
@@ -77,14 +76,17 @@ public abstract class  Creature {
     }
 
 
-    public void attendre(){
-        diminuerMoral();
-        System.out.println(nom + " attend, le moral diminue à " + moral + ".");
-        if(moral <= 0){
-            hurler();
+    public void attendre(ServiceMedical service){
+        if(this instanceof Triage || service.getCreatures().size()>1){
+            diminuerMoral(5);
+        } else if (this instanceof VIP) {
+            diminuerMoral(20);
         }
-
-
+        else {
+            diminuerMoral(10);
+        }
+        System.out.println(nom + " attend, le moral diminue à " + moral + ".");
+        if(moral == 0){hurler();}
     }
 
     public void hurler(){
