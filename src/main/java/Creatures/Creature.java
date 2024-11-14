@@ -104,9 +104,8 @@ public abstract class  Creature {
 
     }
     public void tomberMalade(Maladie maladie){
-        if(maladies.size() < 5) {
-            maladies.add(maladie);
-        }
+        maladies.add(maladie);
+
     }
     public void guerir(Maladie maladie){
         maladies.remove(maladie);
@@ -115,27 +114,23 @@ public abstract class  Creature {
         System.out.println(nom + " a été soigné de " + maladie.getNomComplet() + ". Moral: " + moral);
 
     }
-    public void trepasser(Maladie maladie, ServiceMedical service){
-        System.out.println(nom +"trepasse !");
+    public void trepasser(Maladie maladie, ServiceMedical service) {
+        System.out.println(nom + "trepasse !");
         service.enleverCreature(this);
 
         if (this instanceof Demoralisante) {
-            ((Demoralisante) this).demoraliser(service.getCreatures());
+            if (!service.getCreatures().isEmpty()) {
+                ((Demoralisante) this).demoraliser(service.getCreatures());
+            }
         }
         if (this instanceof Bestiale) {
             Creature victime = service.getCreatures().isEmpty() ? null : service.getCreatures().get(0);
             if (victime != null) {
                 ((Bestiale) this).contaminer(maladie, victime);
-            } else {
-                System.out.println("Aucune créature à contaminer.");
             }
         }
         if (this instanceof MortVivant) {
             ((MortVivant) this).regenerer(this);
         }
-
     }
-
-
-
 }
