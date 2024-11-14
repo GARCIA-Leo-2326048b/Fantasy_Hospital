@@ -12,9 +12,9 @@ public class ServiceMedical {
     private double superficie;
     private final int CAPACITE_MAX;
     private List<Creature> creatures;
-    private String budget;
+    private Budget budget;
 
-    public ServiceMedical(String nom, double superficie,  String budget) {
+    public ServiceMedical(String nom, double superficie,  Budget budget) {
         this.nom = nom;
         this.superficie = superficie;
         this.CAPACITE_MAX = 15;
@@ -38,7 +38,7 @@ public class ServiceMedical {
         return creatures;
     }
 
-    public String getBudget() {
+    public Budget getBudget() {
         return budget;
     }
 
@@ -75,7 +75,7 @@ public class ServiceMedical {
         }
     }
 
-    public void reviserBudget(String nouveauBudget){
+    public void reviserBudget(Budget nouveauBudget){
         budget = nouveauBudget;
     }
 }

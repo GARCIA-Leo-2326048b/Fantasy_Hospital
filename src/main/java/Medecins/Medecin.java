@@ -1,14 +1,16 @@
 package Medecins;
 
+import Creatures.Age;
 import Maladies.Maladie;
+import ServicesMedicaux.Budget;
 import ServicesMedicaux.ServiceMedical;
 
 public class Medecin {
     private String nom;
     private String sexe;
-    private int age;
+    private Age age;
 
-    public Medecin(String nom, String sexe, int age) {
+    public Medecin(String nom, String sexe, Age age) {
         this.nom = nom;
         this.sexe = sexe;
         this.age = age;
@@ -21,7 +23,7 @@ public class Medecin {
         return sexe;
     }
 
-    public int getAge() {
+    public Age getAge() {
         return age;
     }
     public void examinerService(ServiceMedical service) {
@@ -34,7 +36,7 @@ public class Medecin {
         service.soignerCreatures(maladie);
     }
 
-    public void reviserBudget(ServiceMedical service, String nouveauBudget) {
+    public void reviserBudget(ServiceMedical service, Budget nouveauBudget) {
         service.reviserBudget(nouveauBudget);
         System.out.println(nom + " a révisé le budget du service " + service.getNom() + " à : " + nouveauBudget);
     }
