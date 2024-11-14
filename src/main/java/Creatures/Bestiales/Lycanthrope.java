@@ -23,8 +23,6 @@ public class Lycanthrope extends Creature implements Bestiale {
     }
 
 
-    }
-
 
     public int getForce() {
         return force;
