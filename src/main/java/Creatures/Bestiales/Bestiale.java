@@ -8,10 +8,4 @@ import java.security.Provider;
 
 public interface Bestiale {
 
-    default void contaminer(Maladie maladie, Creature autreCreature){
-        autreCreature.getMaladies().add(maladie);
-    }
-
-
-
 }

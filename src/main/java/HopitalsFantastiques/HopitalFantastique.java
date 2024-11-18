@@ -22,6 +22,18 @@ public class HopitalFantastique {
         this.medecins = new ArrayList<>();
     }
 
+    public List<ServiceMedical> getServicesMedicaux() {
+        return servicesMedicaux;
+    }
+
+    public List<Medecin> getMedecins() {
+        return medecins;
+    }
+
+    public int getSERVICES_MAX() {
+        return SERVICES_MAX;
+    }
+
     public String getNom() {
         return nom;
     }
@@ -78,12 +90,12 @@ public class HopitalFantastique {
         //Medecin medecin = new Medecin();
 
         // Création des threads avec les tâches spécifiques
-        Thread threadCreatures = new Thread(new MiseAJourCreatures());
+        //Thread threadCreatures = new Thread(new MiseAJourCreatures(hopital));
         Thread threadServices = new Thread(new MiseAJourServicesMedicaux());
         Thread threadMedecin = new Thread(new TacheMedecin());
 
         // Démarrage des threads
-        threadCreatures.start();
+        //threadCreatures.start();
         threadServices.start();
         threadMedecin.start();
     }

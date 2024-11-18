@@ -35,6 +35,9 @@ public abstract class  Creature {
 
     }
 
+    public int getNombreHurlement() {
+        return nombreHurlement;
+    }
 
     public String getSexe() {
         return sexe;
@@ -60,6 +63,9 @@ public abstract class  Creature {
         return poids;
     }
 
+    public void setNombreHurlement(int nombreHurlement) {
+        this.nombreHurlement = nombreHurlement;
+    }
 
     public String getNom() {
         return nom;
@@ -86,24 +92,16 @@ public abstract class  Creature {
             diminuerMoral(10);
         }
         System.out.println(nom + " attend, le moral diminue à " + moral + ".");
-        if(moral == 0){hurler();}
+
     }
 
     public void hurler(){
-        if (moral == 0 && nombreHurlement < 10) {
-            System.out.println(nom + " hurle de désespoir !");
-            nombreHurlement ++;
-        }
-        else if (nombreHurlement == 10) {
-            nombreHurlement = 0;
-            sEmporter();
-        }
-
+        System.out.println(nom + " hurle de désespoir !");
+        nombreHurlement ++;
     }
     public void sEmporter(){
 
         System.out.println(nom + " s'emporte de rage !");
-
     }
     public void tomberMalade(Maladie maladie){
         maladies.add(maladie);
@@ -115,6 +113,9 @@ public abstract class  Creature {
         if (moral > 100) moral = 100;
         System.out.println(nom + " a été soigné de " + maladie.getNomComplet() + ". Moral: " + moral);
 
+    }
+    public void contaminer(Maladie maladie, Creature autreCreature){
+        autreCreature.tomberMalade(maladie);
     }
     public void trepasser(Maladie maladie, ServiceMedical service) {
         System.out.println(nom + "trepasse !");
@@ -128,7 +129,7 @@ public abstract class  Creature {
         if (this instanceof Bestiale) {
             Creature victime = service.getCreatures().isEmpty() ? null : service.getCreatures().get(0);
             if (victime != null) {
-                ((Bestiale) this).contaminer(maladie, victime);
+                this.contaminer(maladie, victime);
             }
         }
         if (this instanceof MortVivant) {

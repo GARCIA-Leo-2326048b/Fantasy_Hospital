@@ -1,8 +1,6 @@
 package Creatures.Demoralisantes;
 
 import Creatures.Creature;
-import Maladies.Maladie;
-import ServicesMedicaux.ServiceMedical;
 
 import java.util.List;
 

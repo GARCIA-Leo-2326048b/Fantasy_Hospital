@@ -7,11 +7,11 @@ public class Maladie {
     private int niveau;
     private final int NIVEAU_MAX;
 
-    public Maladie(String nomComplet, String nomAbrege) {
-        this.nomComplet = nomComplet;
-        this.nomAbrege = nomAbrege;
+    public Maladie(MaladieType type) {
+        this.nomComplet = type.getNomComplet();
+        this.nomAbrege = type.getNomAbrege();
         this.niveau = 0;
-        this.NIVEAU_MAX = 10;
+        this.NIVEAU_MAX = type.getNiveauMax();
     }
 
     public String getNomComplet() {
