@@ -91,13 +91,13 @@ public class HopitalFantastique {
 
         // Création des threads avec les tâches spécifiques
         //Thread threadCreatures = new Thread(new MiseAJourCreatures(hopital));
-        Thread threadServices = new Thread(new MiseAJourServicesMedicaux());
-        Thread threadMedecin = new Thread(new TacheMedecin());
+        //Thread threadServices = new Thread(new MiseAJourServicesMedicaux());
+        //Thread threadMedecin = new Thread(new TacheMedecin());
 
         // Démarrage des threads
         //threadCreatures.start();
-        threadServices.start();
-        threadMedecin.start();
+        //threadServices.start();
+        //threadMedecin.start();
     }
 
 }
