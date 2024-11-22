@@ -10,6 +10,8 @@ import ServicesMedicaux.ServiceMedical;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 public abstract class  Creature {
 
@@ -82,8 +84,9 @@ public abstract class  Creature {
     }
 
 
+
     public void attendre(ServiceMedical service){
-        if(this instanceof Triage || service.getCreatures().size()>1){
+        if(this instanceof Triage && service.getCreatures().size()>1){
             diminuerMoral(5);
         } else if (this instanceof VIP) {
             diminuerMoral(20);
@@ -92,7 +95,6 @@ public abstract class  Creature {
             diminuerMoral(10);
         }
         System.out.println(nom + " attend, le moral diminue à " + moral + ".");
-
     }
 
     public void hurler(){
@@ -114,23 +116,27 @@ public abstract class  Creature {
         System.out.println(nom + " a été soigné de " + maladie.getNomComplet() + ". Moral: " + moral);
 
     }
-    public void contaminer(Maladie maladie, Creature autreCreature){
-        autreCreature.tomberMalade(maladie);
+    public void contaminer(Maladie maladie, List<Creature> autreCreatures){
+        Random random = new Random();
+
+        // Choisir une victime aléatoire
+        Creature victime = autreCreatures.get(random.nextInt(autreCreatures.size()));
+
+        // Contaminer la victime
+        victime.tomberMalade(maladie);
+        System.out.println(this.nom + " a contaminé " + victime.getNom() + " de " + maladie.getNomComplet());
     }
+
+
     public void trepasser(Maladie maladie, ServiceMedical service) {
         System.out.println(nom + "trepasse !");
         service.enleverCreature(this);
 
         if (this instanceof Demoralisante) {
-            if (!service.getCreatures().isEmpty()) {
-                ((Demoralisante) this).demoraliser(service.getCreatures());
-            }
+            ((Demoralisante) this).demoraliser(service.getCreatures());
         }
         if (this instanceof Bestiale) {
-            Creature victime = service.getCreatures().isEmpty() ? null : service.getCreatures().get(0);
-            if (victime != null) {
-                this.contaminer(maladie, victime);
-            }
+            this.contaminer(maladie, service.getCreatures());
         }
         if (this instanceof MortVivant) {
             ((MortVivant) this).regenerer(this, service);

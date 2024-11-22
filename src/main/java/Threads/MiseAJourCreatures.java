@@ -9,12 +9,19 @@ import ServicesMedicaux.ServiceMedical;
 import java.util.List;
 import java.util.Random;
 
+import static java.lang.Thread.sleep;
+
 public class MiseAJourCreatures implements Runnable {
     private HopitalFantastique hopital;
     private Random random = new Random();
+    long debut ;
+    long dureeMillis;
+
 
     public MiseAJourCreatures(HopitalFantastique hopital) {
         this.hopital = hopital;
+        this.debut = System.currentTimeMillis();
+        this.dureeMillis = 5000;
     }
 
     public void run() {
@@ -23,60 +30,36 @@ public class MiseAJourCreatures implements Runnable {
             return;
         }
 
-        while (true) {
+        while (System.currentTimeMillis() - debut < dureeMillis) {
 
-            ServiceMedical service = selectionnerServiceAleatoire();
-            Creature creature = selectionnerCreatureAleatoire(service);
-
+            ServiceMedical service = selectionnerAleatoire(hopital.getServicesMedicaux());
+            Creature creature = selectionnerAleatoire(service.getCreatures());
             // Modifier aléatoirement l'état de la créature
             int action = random.nextInt(3); // Trois actions possibles
             switch (action) {
                 case 0:
                     // Rendre la créature malade
-
-                    if(creature.getMaladies().size()==5)continue;
-
-                    Maladie maladie = creerMaladieAleatoire();
-                    creature.tomberMalade(maladie);
+                    rendreCreatureMalade(creature);
                     break;
                 case 1:
                     // Faire évoluer une maladie existante
-
                     if (creature.getMaladies().isEmpty())continue;
-
-                    // Sélectionner une maladie au hasard dans la liste des maladies de la créature
-                    Maladie maladieExistante = selectionnerMaladieAleatoire(creature);
-                    // Faire évoluer la maladie sélectionnée
-                    maladieExistante.augmenterNiveau();
-
+                    evoluerMaladie(creature,service);
                     break;
                 case 2:
                     // Faire évoluer le moral de la créature
-
-                    creature.attendre(service);
-                    if(creature.getMoral() == 0){
-                        creature.hurler();
-                        if (creature.getNombreHurlement() == 10) {
-                            creature.setNombreHurlement(0);
-                            creature.sEmporter();
-
-                            if (random.nextDouble() < 0.7) {
-                                //creature.contaminer();
-                            }
-                        }
-                    }
-
-
+                    evoluerMoral(creature,service);
                     break;
                 default:
                     break;
             }
-
             try {
-                Thread.sleep(5000); // Pause de 5 secondes
+                sleep(5000); // Pause de 5 secondes
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
+
+
         }
     }
 
@@ -87,27 +70,14 @@ public class MiseAJourCreatures implements Runnable {
         return new Maladie(maladieType);
     }
 
-    public Maladie selectionnerMaladieAleatoire(Creature creature) {
-        int indexMaladie = random.nextInt(creature.getMaladies().size());
-        return creature.getMaladies().get(indexMaladie);
-    }
 
-    public ServiceMedical selectionnerServiceAleatoire() {
-        // Obtenir la liste des services médicaux de l'hôpital
-        List<ServiceMedical> services = hopital.getServicesMedicaux();
-
-        // Sélectionner un service médical aléatoire
-        int serviceIndex = random.nextInt(services.size());
-        return services.get(serviceIndex);
-    }
-
-    public Creature selectionnerCreatureAleatoire(ServiceMedical service) {
-        // Obtenir la liste des créatures dans ce service
-        List<Creature> creatures = service.getCreatures();
-
-        // Sélectionner une créature aléatoire
-        int creatureIndex = random.nextInt(creatures.size());
-        return creatures.get(creatureIndex);
+    // Méthode générique pour sélectionner un élément aléatoire
+    public <T> T selectionnerAleatoire(List<T> liste) {
+        if (liste.isEmpty()) {
+            return null;  // Si la liste est vide, retourner null
+        }
+        int index = random.nextInt(liste.size());
+        return liste.get(index);
     }
 
     // Méthode pour vérifier la structure de l'hôpital
@@ -128,5 +98,46 @@ public class MiseAJourCreatures implements Runnable {
         }
 
         return true; // L'hôpital est bien structuré
+    }
+
+    private void rendreCreatureMalade(Creature creature) {
+
+        Maladie maladie = creerMaladieAleatoire();
+        // Vérifier si la créature a déjà cette maladie
+        boolean maladieExistante = creature.getMaladies().stream()
+                .anyMatch(m -> m.getNomAbrege().equals(maladie.getNomAbrege()));
+
+        if(maladieExistante)return;
+        creature.tomberMalade(maladie);
+    }
+
+    private void evoluerMaladie(Creature creature, ServiceMedical service) {
+        //Maladie maladieExistante = selectionnerMaladieAleatoire(creature);
+        Maladie maladieExistante = selectionnerAleatoire(creature.getMaladies());
+        // Faire évoluer la maladie sélectionnée
+        maladieExistante.augmenterNiveau();
+
+        if (maladieExistante.estLetal()) {
+            creature.trepasser(maladieExistante, service);
+        }
+    }
+
+    private void evoluerMoral(Creature creature, ServiceMedical service) {
+
+        creature.attendre(service);
+
+        if(creature.getMoral()!=0)return;
+        creature.hurler();
+
+        if (creature.getNombreHurlement() < 10)return;
+        creature.setNombreHurlement(0);
+        creature.sEmporter();
+
+        if (random.nextDouble() < 0.7) {
+            if (!creature.getMaladies().isEmpty()) {
+                Maladie maladieAContaminer = creature.getMaladies().get(random.nextInt(creature.getMaladies().size()));
+                creature.contaminer(maladieAContaminer, service.getAutresCreatures(creature));
+            }
+        }
     }
 }

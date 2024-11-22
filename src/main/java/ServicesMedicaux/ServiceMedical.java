@@ -41,6 +41,17 @@ public class ServiceMedical {
     public List<Creature> getCreatures() {
         return creatures;
     }
+    public List<Creature> getAutresCreatures(Creature creature){
+
+        List<Creature> autresCreatures = new ArrayList<>();
+        List<Creature> creatures = getCreatures();
+        for (Creature c : creatures) {
+            if (!c.equals(creature)) {
+                autresCreatures.add(c);
+            }
+        }
+        return autresCreatures;
+    }
 
     public Budget getBudget() {
         return budget;
