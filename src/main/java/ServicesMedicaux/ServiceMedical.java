@@ -14,6 +14,7 @@ public class ServiceMedical {
     private List<Creature> creatures;
     private Budget budget;
 
+
     public ServiceMedical(String nom, double superficie,  Budget budget) {
         this.nom = nom;
         this.superficie = superficie;
