@@ -7,8 +7,8 @@ import java.util.List;
 public interface Demoralisante {
 
     default void demoraliser(List<Creature> autresCreatures){
-        for (Creature autreCreature : autresCreatures) {
-            autreCreature.diminuerMoral(10);
+        for (Creature creature : autresCreatures) {
+            creature.diminuerMoral(10);
         }
     }
 
