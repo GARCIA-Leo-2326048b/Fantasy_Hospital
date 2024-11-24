@@ -13,20 +13,21 @@ public class HopitalFantastique {
     private String nom;
     private int SERVICES_MAX;
     private List<ServiceMedical> servicesMedicaux;
-    private List<Medecin> medecins;
+    private List<Creature> medecins;
 
     public HopitalFantastique(String nom) {
         this.nom = nom;
         this.SERVICES_MAX = 5;
         this.servicesMedicaux = new ArrayList<>();
         this.medecins = new ArrayList<>();
+
     }
 
     public List<ServiceMedical> getServicesMedicaux() {
         return servicesMedicaux;
     }
 
-    public List<Medecin> getMedecins() {
+    public List<Creature> getMedecins() {
         return medecins;
     }
 
@@ -47,7 +48,10 @@ public class HopitalFantastique {
         }
     }
 
-    public void ajouterMedecin(Medecin medecin) {
+    public void ajouterMedecin(Creature medecin) {
+        if (!medecin.estMedecin()) {
+            throw new IllegalStateException(medecin.getNom() + " n'est pas un médecin.");
+        }
         medecins.add(medecin);
         System.out.println("Médecin " + medecin.getNom() + " a été ajouté à l'hôpital " + nom);
     }
@@ -78,7 +82,7 @@ public class HopitalFantastique {
             service.afficherCaracteristiques();
         }
         System.out.println("Médecins :");
-        for (Medecin medecin : medecins) {
+        for (Creature medecin : medecins) {
             System.out.println(" - " + medecin.getNom() + ", Sexe : " + medecin.getSexe() + ", Âge : " + medecin.getAge());
         }
         System.out.println("Nombre total de créatures dans l'hôpital : " + nombreTotalCreatures());

@@ -6,14 +6,14 @@ import Creatures.MortVivantes.MortVivant;
 import Creatures.Triage.Triage;
 import Creatures.VIP.VIP;
 import Maladies.Maladie;
+import Medecins.Medecin;
 import ServicesMedicaux.ServiceMedical;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import java.util.concurrent.ThreadLocalRandom;
 
-public abstract class  Creature {
+public abstract class  Creature implements Medecin {
 
     private String nom;
     private String sexe;
@@ -23,6 +23,7 @@ public abstract class  Creature {
     private int moral;
     private List<Maladie> maladies;
     private int nombreHurlement = 0;
+    private boolean estMedecin;
 
 
 
@@ -34,7 +35,15 @@ public abstract class  Creature {
         this.maladies = new ArrayList<>();
         this.poids = poids;
         this.taille = taille;
+        this.estMedecin = false;
 
+    }
+
+    public Creature(String nom,String sexe,Age age){
+        this.nom = nom;
+        this.age=age;
+        this.sexe = sexe;
+        this.estMedecin = true;
     }
 
     public int getNombreHurlement() {
@@ -73,16 +82,22 @@ public abstract class  Creature {
         return nom;
     }
 
-    public void diminuerMoral( int points){
-        moral -= points;
-        if (moral < 0) moral = 0;
-    }
 
 
     public List<Maladie> getMaladies() {
         return maladies;
     }
 
+    public boolean estMedecin() {
+        return estMedecin;
+    }
+
+
+
+    public void diminuerMoral( int points){
+        moral -= points;
+        if (moral < 0) moral = 0;
+    }
 
 
     public void attendre(ServiceMedical service){
@@ -106,6 +121,9 @@ public abstract class  Creature {
         System.out.println(nom + " s'emporte de rage !");
     }
     public void tomberMalade(Maladie maladie){
+        if (estMedecin()) {
+            throw new IllegalStateException(nom + " est un médecin et ne peut pas tomber malade.");
+        }
         maladies.add(maladie);
 
     }

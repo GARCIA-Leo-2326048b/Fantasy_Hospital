@@ -1,5 +1,6 @@
 package Threads;
 
+import HopitalsFantastiques.HopitalFantastique;
 import ServicesMedicaux.Budget;
 import ServicesMedicaux.ServiceMedical;
 import ServicesMedicaux.ServicesSpeciaux.Crypte;
@@ -9,25 +10,25 @@ import java.util.List;
 import java.util.Random;
 
 public class MiseAJourServicesMedicaux extends Thread {
-    private final List<ServiceMedical> servicesMedicaux;
+    private HopitalFantastique hopital;
     private final Random random = new Random();
     private boolean running = true;
 
-    public MiseAJourServicesMedicaux(List<ServiceMedical> servicesMedicaux) {
-        this.servicesMedicaux = servicesMedicaux;
+    public MiseAJourServicesMedicaux(HopitalFantastique hopital) {
+        this.hopital = hopital;
     }
 
     @Override
     public void run() {
         while (running) {
-            try {
                 // Parcourir tous les services médicaux et modifier leurs états
-                for (ServiceMedical service : servicesMedicaux) {
-                    modifierEtatService(service);
-                }
-                // Pause entre chaque cycle de mise à jour (ex. 5 secondes)
-                Thread.sleep(5000);
-            } catch (InterruptedException e) {
+                ServiceMedical service = selectionnerAleatoire(hopital.getServicesMedicaux());
+
+                modifierEtatService(service);
+
+                try {
+                    Thread.sleep(5000);
+                } catch (InterruptedException e) {
                 System.out.println("Thread interrompu : " + e.getMessage());
                 running = false;
             }
@@ -35,19 +36,17 @@ public class MiseAJourServicesMedicaux extends Thread {
     }
 
     private void modifierEtatService(ServiceMedical service) {
+
         System.out.println("Mise à jour du service : " + service.getNom());
-
-        // Modifier aléatoirement le budget du service
-        modifierBudget(service);
-
         // Si c'est un Centre de Quarantaine, modifier l'isolation
-        if (service instanceof CentreDeQuarantaine) {
+        if(service.getClass().getSimpleName().equalsIgnoreCase("CentreDeQuarantaine")){
             modifierIsolation((CentreDeQuarantaine) service);
-        }
 
-        // Si c'est une Crypte, modifier la température et la ventilation
-        if (service instanceof Crypte) {
+        } else if (service.getClass().getSimpleName().equalsIgnoreCase("Crypte")) {// Si c'est une Crypte, modifier la température et la ventilation
             modifierCrypte((Crypte) service);
+        }else{
+            // Modifier aléatoirement le budget du service
+            modifierBudget(service);
         }
     }
 
@@ -77,5 +76,14 @@ public class MiseAJourServicesMedicaux extends Thread {
 
     public void stopThread() {
         running = false;
+    }
+
+    // Méthode générique pour sélectionner un élément aléatoire
+    public <T> T selectionnerAleatoire(List<T> liste) {
+        if (liste.isEmpty()) {
+            return null;  // Si la liste est vide, retourner null
+        }
+        int index = random.nextInt(liste.size());
+        return liste.get(index);
     }
 }
