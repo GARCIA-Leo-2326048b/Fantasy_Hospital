@@ -58,6 +58,9 @@ public class ServiceMedical {
     }
 
     public void ajouterCreature(Creature creature) {
+        if (creature.estMedecin()) {
+            throw new IllegalStateException(creature.getNom() + " n'est pas une creature.");
+        }
         if (creature.getClass().getSimpleName().equalsIgnoreCase(getTypeCreature().toString())) {
             if (creatures.size() < CAPACITE_MAX ) {
                 creatures.add(creature);
