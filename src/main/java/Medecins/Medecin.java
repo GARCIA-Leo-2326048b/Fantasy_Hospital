@@ -35,71 +35,78 @@ public interface Medecin {
         System.out.println(((Creature) this).getNom() + " a révisé le budget du service " + service.getNom() + " à : " + nouveauBudget);
     }
 
-    default void gererHopital(ServiceMedical service){
-        System.out.println("\nC'est à vous de jouer !");
-        int actionsRestantes = 5; // Nombre d'actions par intervalle
+    default MaladieType selectionMaladie(){
         Scanner scanner = new Scanner(System.in);
+        System.out.println("De quelle maladie souhaitez-vous soigner le service ? (1: MDC, 2: FOMO, 3: DRS, 4: PEC, 5: ZPL)");
+        System.out.print("Votre choix : ");
+        int choixMaladie = scanner.nextInt();
+        return switch (choixMaladie) {
+            case 1 -> MaladieType.MDC;
+            case 2 -> MaladieType.FOMO;
+            case 3 -> MaladieType.DRS;
+            case 4 -> MaladieType.PEC;
+            case 5 -> MaladieType.ZPL;
+            default -> null;
+        };
+
+    }
+
+    default Budget selectionBudget(){
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Quel budget voulez-vous attribuer à ce service ? (1: inexistant, 2: médiocre, 3: insuffisant, 4: faible)");
+        System.out.print("Votre choix : ");
+        int choixBudget = scanner.nextInt();
+        return switch (choixBudget) {
+            case 1 -> Budget.inexistant;
+            case 2 -> Budget.médiocre;
+            case 3 -> Budget.insuffisant;
+            case 4 -> Budget.faible;
+            default -> null;
+        };
+    }
+     default void gererService(ServiceMedical service) {
+         Scanner scanner = new Scanner(System.in);
+
+        System.out.println("\nC'est à vous de jouer !");
         examinerService(service);
 
-        while (actionsRestantes > 0) {
-            System.out.println("Vous avez " + actionsRestantes + " actions restantes.");
-            System.out.println("Que souhaitez-vous faire ? (1: Soigner le service créature, 2: Réviser le budget du service, 3: Quitter le service)");
-            System.out.print("Votre choix : ");
-            int choixAction = scanner.nextInt();
+        while (true) {
+            try {
+                System.out.println("\nQue souhaitez-vous faire ? (1: Soigner le service, 2: Réviser le budget, 3: Quitter)");
+                System.out.print("Votre choix : ");
+                int choixAction = scanner.nextInt();
 
-            switch (choixAction) {
-                case 1:
-                    System.out.println("De quelle maladie souhaitez vous soigner le service ?(1: MDC, 2: FOMO, 3: DRS, 4: PEC, 5: ZPL)");
-                    System.out.print("Votre choix : ");
-                    int choixMaladie = scanner.nextInt();
-                    // Associer le choix utilisateur à une maladie
-                    MaladieType maladieChoisie;
-                    switch (choixMaladie) {
-                        case 1 -> maladieChoisie = MaladieType.MDC;
-                        case 2 -> maladieChoisie = MaladieType.FOMO;
-                        case 3 -> maladieChoisie = MaladieType.DRS;
-                        case 4 -> maladieChoisie = MaladieType.PEC;
-                        case 5 -> maladieChoisie = MaladieType.ZPL;
-                        default -> {
-                            System.out.println("Choix de maladie invalide.");
-                            continue; // Revenir au menu principal sans consommer d'action
-                        }
-                    }
-
-                    // Appeler la méthode pour soigner le service
-                    soignerService(service, new Maladie(maladieChoisie));
-                    break;
-                case 2:
-                    System.out.println("Quel budget voulez vous attribuer à ce service ?");
-                    System.out.print("Votre choix : ");
-                    int choixBudget = scanner.nextInt();
-                    Budget budgetChoisi;
-                    switch (choixBudget) {
-                        case 1 -> budgetChoisi = Budget.inexistant;
-                        case 2 -> budgetChoisi = Budget.médiocre;
-                        case 3 -> budgetChoisi = Budget.insuffisant;
-                        case 4 -> budgetChoisi = Budget.faible;
-                        default -> {
+                switch (choixAction) {
+                    case 1 -> {
+                        MaladieType maladieChoisie = selectionMaladie();
+                        if (maladieChoisie == null) {
                             System.out.println("Choix de maladie invalide.");
                             continue;
                         }
+                        soignerService(service, new Maladie(maladieChoisie));
                     }
-                    reviserBudget(service,budgetChoisi);
-                    break;
-                case 3:
-                    System.out.println("Vous avez décidé de quitter la gestion.");
-                    actionsRestantes = 0; // Met fin à la boucle
-                    break;
-                default:
-                    System.out.println("Choix invalide. Veuillez entrer un nombre entre 1 et 3.");
-                    continue;
+                    case 2 -> {
+                        Budget budgetChoisi = selectionBudget();
+                        if (budgetChoisi == null) {
+                            System.out.println("Choix de budget invalide.");
+                            continue;
+                        }
+                        reviserBudget(service, budgetChoisi);
+                    }
+                    case 3 -> {
+                        System.out.println("Vous avez décidé de quitter la gestion de ce service.");
+                        return;
+                    }
+                    default -> System.out.println("Choix invalide. Veuillez entrer un nombre entre 1 et 3.");
+                }
+                break;
 
+            } catch (Exception e) {
+                System.out.println("Entrée invalide. Veuillez entrer un nombre.");
+                scanner.nextLine();
             }
-            actionsRestantes--;
         }
     }
-
-
 
 }
 

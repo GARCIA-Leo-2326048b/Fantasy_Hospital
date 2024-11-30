@@ -14,15 +14,28 @@ import static java.lang.Thread.sleep;
 public class MiseAJourCreatures implements Runnable {
     private HopitalFantastique hopital;
     private Random random = new Random();
-    long debut ;
-    long dureeMillis;
+    private volatile boolean enPause;
+    private volatile boolean enCours;
 
 
     public MiseAJourCreatures(HopitalFantastique hopital) {
         this.hopital = hopital;
-        this.debut = System.currentTimeMillis();
-        this.dureeMillis = 5000;
+        this.enCours = true;
+        this.enPause = false;
     }
+    public void mettreEnPause() {
+        enPause = true;
+    }
+
+    public synchronized void reprendre() {
+        enPause = false;
+        notify();
+    }
+    public synchronized void arreter(){
+        enCours = false;
+
+    }
+
 
     public void run() {
         if (!verifierHopitalStructure()) {
@@ -30,14 +43,24 @@ public class MiseAJourCreatures implements Runnable {
             return;
         }
 
-        while (System.currentTimeMillis() - debut < dureeMillis) {
-
+        while (enCours) {
+            synchronized (this) {
+                while (enPause) {
+                    try {
+                        wait(); // Attendre que le flag soit désactivé
+                    } catch (InterruptedException e) {
+                        return;
+                    }
+                }
+            }
             ServiceMedical service = selectionnerAleatoire(hopital.getServicesMedicaux());
             Creature creature = selectionnerAleatoire(service.getCreatures());
+            System.out.println("\nMise à jour du service : " + service.getNom()+"Mise à jour de la créature :"+creature.getNom());
             // Modifier aléatoirement l'état de la créature
             int action = random.nextInt(3); // Trois actions possibles
             switch (action) {
                 case 0:
+
                     // Rendre la créature malade
                     rendreCreatureMalade(creature);
                     break;
@@ -54,7 +77,7 @@ public class MiseAJourCreatures implements Runnable {
                     break;
             }
             try {
-                sleep(5000); // Pause de 5 secondes
+                sleep(2000); // Pause de 5 secondes
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

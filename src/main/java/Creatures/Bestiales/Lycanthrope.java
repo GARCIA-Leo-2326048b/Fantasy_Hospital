@@ -14,13 +14,16 @@ public class Lycanthrope extends Creature implements Bestiale, Triage {
     FacteurImpetuosite facteurImpetuosite;
 // Creer une classe meute
 
-    public Lycanthrope(String nom, String sexe, float poids, float taille, Age age, int moral, int force, int facteurDomination, RangDomination rangDomination, FacteurImpetuosite facteurImpetuosite ) {
+    public Lycanthrope(String nom, String sexe, double poids, double taille, Age age, int moral, int force, int facteurDomination, RangDomination rangDomination, FacteurImpetuosite facteurImpetuosite ) {
         super(nom, sexe, poids, taille, age, moral);
         this.force = force;
         this.facteurDomination = facteurDomination;
         this.rangDomination = rangDomination;
         this.niveau = age.ordinal() * force * rangDomination.ordinal() * facteurDomination  ;
         this.facteurImpetuosite = facteurImpetuosite;
+    }
+    public Lycanthrope(String nom, String sexe, Age age) {
+        super(nom,sexe,age);
     }
 
 

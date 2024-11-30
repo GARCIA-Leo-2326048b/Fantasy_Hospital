@@ -2,12 +2,9 @@ package HopitalsFantastiques;
 
 import java.util.ArrayList;
 import java.util.List;
-import Medecins.Medecin;
+
 import ServicesMedicaux.ServiceMedical;
 import Creatures.Creature;
-import Threads.MiseAJourCreatures;
-import Threads.MiseAJourServicesMedicaux;
-import Threads.TacheMedecin;
 
 public class HopitalFantastique {
     private String nom;
@@ -48,6 +45,7 @@ public class HopitalFantastique {
         }
     }
 
+
     public void ajouterMedecin(Creature medecin) {
         if (!medecin.estMedecin()) {
             throw new IllegalStateException(medecin.getNom() + " n'est pas un médecin.");
@@ -75,33 +73,23 @@ public class HopitalFantastique {
     }
 
     public void afficherCaracteristiques() {
+        int numMedecin =1,numService = 1;
         System.out.println("Hôpital Fantastique : " + nom);
         System.out.println("Nombre maximal de services : " + SERVICES_MAX);
         System.out.println("Services médicaux :");
         for (ServiceMedical service : servicesMedicaux) {
+            System.out.println(numService +" - ");
             service.afficherCaracteristiques();
+            numService++;
         }
         System.out.println("Médecins :");
         for (Creature medecin : medecins) {
-            System.out.println(" - " + medecin.getNom() + ", Sexe : " + medecin.getSexe() + ", Âge : " + medecin.getAge());
+            System.out.println(numMedecin +" - " + medecin.getNom() + ", Sexe : " + medecin.getSexe() + ", Âge : " + medecin.getAge());
+            numMedecin++;
         }
         System.out.println("Nombre total de créatures dans l'hôpital : " + nombreTotalCreatures());
     }
 
-    public static void main(String[] args) {
-        //CREATION DE L4HOPITAL
-        //HopitalFantastique hopital = new HopitalFantastique();
-        //Medecin medecin = new Medecin();
 
-        // Création des threads avec les tâches spécifiques
-        //Thread threadCreatures = new Thread(new MiseAJourCreatures(hopital));
-        //Thread threadServices = new Thread(new MiseAJourServicesMedicaux());
-        //Thread threadMedecin = new Thread(new TacheMedecin());
-
-        // Démarrage des threads
-        //threadCreatures.start();
-        //threadServices.start();
-        //threadMedecin.start();
-    }
 
 }

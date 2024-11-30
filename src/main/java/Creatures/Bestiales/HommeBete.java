@@ -8,10 +8,12 @@ import ServicesMedicaux.ServiceMedical;
 
 public class HommeBete extends Creature implements Bestiale, Triage {
 
-    public HommeBete(String nom, String sexe, float poids, float taille, Age age, int moral) {
+    public HommeBete(String nom, String sexe, double poids, double taille, Age age, int moral) {
         super(nom, sexe, poids, taille, age, moral);
     }
-
+    public HommeBete(String nom, String sexe, Age age) {
+        super(nom,sexe,age);
+    }
 
 
 }

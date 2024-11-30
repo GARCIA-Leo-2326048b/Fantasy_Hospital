@@ -9,10 +9,13 @@ import Creatures.VIP.VIP;
 import java.util.List;
 
 public class Vampire extends Creature implements Demoralisante, Bestiale, MortVivant, VIP {
-    public Vampire(String nom, String sexe, float poids, float taille, Age age, int moral) {
+
+    public Vampire(String nom, String sexe, double poids, double taille, Age age, int moral) {
         super(nom, sexe, poids, taille, age, moral);
     }
-
+    public Vampire(String nom, String sexe, Age age) {
+        super(nom,sexe,age);
+    }
 
 
 

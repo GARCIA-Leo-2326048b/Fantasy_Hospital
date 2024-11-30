@@ -9,51 +9,70 @@ import ServicesMedicaux.ServicesSpeciaux.CentreDeQuarantaine;
 import java.util.List;
 import java.util.Random;
 
-public class MiseAJourServicesMedicaux extends Thread {
+public class MiseAJourServicesMedicaux implements Runnable {
     private HopitalFantastique hopital;
     private final Random random = new Random();
-    private boolean running = true;
+    private volatile boolean enPause;
+    private volatile boolean enCours;
+
 
     public MiseAJourServicesMedicaux(HopitalFantastique hopital) {
         this.hopital = hopital;
+        this.enCours = true;
+        this.enPause = false;
+    }
+
+    public void mettreEnPause() {
+        enPause = true;
+    }
+
+    public synchronized void reprendre() {
+        enPause = false;
+        notify();
+    }
+    public synchronized void arreter(){
+        enCours = false;
     }
 
     @Override
     public void run() {
-        while (running) {
-                // Parcourir tous les services médicaux et modifier leurs états
-                ServiceMedical service = selectionnerAleatoire(hopital.getServicesMedicaux());
-
-                modifierEtatService(service);
-
-                try {
-                    Thread.sleep(5000);
-                } catch (InterruptedException e) {
+        while (enCours) {
+            synchronized (this) {
+                while (enPause) {
+                    try {
+                        wait(); // Attendre que le flag soit désactivé
+                    } catch (InterruptedException e) {
+                        return;
+                    }
+                }
+            }
+            // Parcourir tous les services médicaux et modifier leurs états
+            ServiceMedical service = selectionnerAleatoire(hopital.getServicesMedicaux());
+            modifierEtatService(service);
+            try {
+                Thread.sleep(2000);
+            } catch (InterruptedException e) {
                 System.out.println("Thread interrompu : " + e.getMessage());
-                running = false;
             }
         }
     }
 
     private void modifierEtatService(ServiceMedical service) {
-
         System.out.println("Mise à jour du service : " + service.getNom());
         // Si c'est un Centre de Quarantaine, modifier l'isolation
         if(service.getClass().getSimpleName().equalsIgnoreCase("CentreDeQuarantaine")){
             modifierIsolation((CentreDeQuarantaine) service);
-
-        } else if (service.getClass().getSimpleName().equalsIgnoreCase("Crypte")) {// Si c'est une Crypte, modifier la température et la ventilation
+        }if (service.getClass().getSimpleName().equalsIgnoreCase("Crypte")) {// Si c'est une Crypte, modifier la température et la ventilation
             modifierCrypte((Crypte) service);
-        }else{
-            // Modifier aléatoirement le budget du service
-            modifierBudget(service);
         }
+        // Modifier aléatoirement le budget du service
+        modifierBudget(service);
+
     }
 
     private void modifierBudget(ServiceMedical service) {
         // Sélection aléatoire d'un budget parmi les valeurs de l'énumération Budget
-        Budget[] budgets = Budget.values();
-        Budget nouveauBudget = budgets[random.nextInt(budgets.length)];
+        Budget nouveauBudget = selectionnerAleatoire(List.of(Budget.values()));
         service.reviserBudget(nouveauBudget); // Met à jour le budget avec la valeur de l'énumération
         System.out.println("Nouveau budget pour " + service.getNom() + " : " + nouveauBudget.name());
     }
@@ -74,10 +93,6 @@ public class MiseAJourServicesMedicaux extends Thread {
         System.out.println("Nouveau niveau de ventilation pour " + service.getNom() + " : " + nouvelleVentilation);
     }
 
-    public void stopThread() {
-        running = false;
-    }
-
     // Méthode générique pour sélectionner un élément aléatoire
     public <T> T selectionnerAleatoire(List<T> liste) {
         if (liste.isEmpty()) {
@@ -86,4 +101,6 @@ public class MiseAJourServicesMedicaux extends Thread {
         int index = random.nextInt(liste.size());
         return liste.get(index);
     }
+
+
 }

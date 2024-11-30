@@ -64,12 +64,13 @@ public class ServiceMedical {
         if (creature.getClass().getSimpleName().equalsIgnoreCase(getTypeCreature().toString())) {
             if (creatures.size() < CAPACITE_MAX ) {
                 creatures.add(creature);
-                System.out.println(creature.getNom() + " a été ajouté(e) au service " + nom);
             } else {
                 System.out.println("Le service " + nom + " est plein !");
             }
         }
     }
+
+
 
     public void enleverCreature(Creature creature) {
         creatures.remove(creature);
@@ -88,8 +89,7 @@ public class ServiceMedical {
     }
 
     public void afficherCaracteristiques() {
-        System.out.println("Service : " + nom + "Type de créature : " + typeCreature + "Superficie : " + superficie + "m², Capacité : " + CAPACITE_MAX);
-        System.out.println("Budget : " + budget);
+        System.out.println("Service : " + nom + "\nType de créature : " + typeCreature + "\nSuperficie : " + superficie + "m²"+"\nCapacité : " + CAPACITE_MAX+"\nBudget : " + budget);
         for (Creature creature : creatures) {
             System.out.println(" - " + creature.getNom() + ", Moral : " + creature.getMoral());
             // Parcours de la liste des maladies de chaque créature

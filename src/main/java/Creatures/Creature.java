@@ -17,8 +17,8 @@ public abstract class  Creature implements Medecin {
 
     private String nom;
     private String sexe;
-    private float poids;
-    private float taille;
+    private double poids;
+    private double taille;
     private Age age;
     private int moral;
     private List<Maladie> maladies;
@@ -27,7 +27,7 @@ public abstract class  Creature implements Medecin {
 
 
 
-    public Creature (String nom,String sexe,float poids,float taille,Age age,int moral) {
+    public Creature (String nom,String sexe,double poids,double taille,Age age,int moral) {
         this.nom = nom;
         this.age=age;
         this.sexe = sexe;
@@ -54,7 +54,7 @@ public abstract class  Creature implements Medecin {
         return sexe;
     }
 
-    public float getTaille() {
+    public double getTaille() {
         return taille;
     }
 
@@ -70,7 +70,7 @@ public abstract class  Creature implements Medecin {
         return age;
     }
 
-    public float getPoids() {
+    public double getPoids() {
         return poids;
     }
 
@@ -102,12 +102,12 @@ public abstract class  Creature implements Medecin {
 
     public void attendre(ServiceMedical service){
         if(this instanceof Triage && service.getCreatures().size()>1){
-            diminuerMoral(5);
+            diminuerMoral(10);
         } else if (this instanceof VIP) {
-            diminuerMoral(20);
+            diminuerMoral(30);
         }
         else {
-            diminuerMoral(10);
+            diminuerMoral(20);
         }
         System.out.println(nom + " attend, le moral diminue à " + moral + ".");
     }
@@ -121,6 +121,7 @@ public abstract class  Creature implements Medecin {
         System.out.println(nom + " s'emporte de rage !");
     }
     public void tomberMalade(Maladie maladie){
+        System.out.println(nom + "tombe malade !");
         if (estMedecin()) {
             throw new IllegalStateException(nom + " est un médecin et ne peut pas tomber malade.");
         }
@@ -128,10 +129,12 @@ public abstract class  Creature implements Medecin {
 
     }
     public void guerir(Maladie maladie){
-        maladies.remove(maladie);
-        moral += 10;
-        if (moral > 100) moral = 100;
-        System.out.println(nom + " a été soigné de " + maladie.getNomComplet() + ". Moral: " + moral);
+        if(maladies.contains(maladie)) {
+            maladies.remove(maladie);
+            moral += 10;
+            if (moral > 100) moral = 100;
+            System.out.println(nom + " a été soigné de " + maladie.getNomComplet() + ". Moral: " + moral);
+        }
 
     }
     public void contaminer(Maladie maladie, List<Creature> autreCreatures){
