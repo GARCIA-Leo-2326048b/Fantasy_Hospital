@@ -3,8 +3,6 @@ package Creatures.Bestiales;
 import Creatures.Age;
 import Creatures.Creature;
 import Creatures.Triage.Triage;
-import Maladies.Maladie;
-import ServicesMedicaux.ServiceMedical;
 
 public class HommeBete extends Creature implements Bestiale, Triage {
 
