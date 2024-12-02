@@ -137,7 +137,7 @@ public class Meute {
     /**
      * Réorganise le couple alpha si l'un des alpha est retiré ou décédé.
      */
-    private void redefinirCoupleAlpha() {
+    public void redefinirCoupleAlpha() {
         Lycanthrope2 nouveauMaleAlpha = null;
         Lycanthrope2 nouvelleFemelleAlpha = null;
 
@@ -167,7 +167,7 @@ public class Meute {
     /**
      * Dissout la meute en vidant la liste des membres et en réinitialisant les attributs.
      */
-    private void dissoudreMeute() {
+    public void dissoudreMeute() {
         for (Lycanthrope2 membre : membres) {
             membre.setMeute(null);
         }
@@ -404,4 +404,21 @@ public class Meute {
     public boolean isDissoute() {
         return dissoute;
     }
+
+
+    /**
+     * Indique le nombre de Lycantrope2 malde
+     *
+     * @return le nombre de malade dans la Meute
+     */
+    public int getNombreMalades(){
+        int nombreMalades = 0;
+        for(Lycanthrope2 membre : membres){
+            if (membre.isMalade()){
+                nombreMalades++;
+            }
+        }
+        return nombreMalades;
+    }
+
 }

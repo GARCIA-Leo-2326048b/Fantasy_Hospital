@@ -229,7 +229,7 @@ public class Lycanthrope2 {
      *
      * @return Le niveau calculé.
      */
-    private double calculerNiveau() {
+    public double calculerNiveau() {
         return force + (facteurDomination * 0.5) + facteurImpetuosite;
     }
 
