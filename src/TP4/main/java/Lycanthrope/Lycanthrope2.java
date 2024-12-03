@@ -379,4 +379,26 @@ public class Lycanthrope2 {
     public boolean isMalade() {
         return estMalade;
     }
+
+
+    /**
+     * Gère le veillissement du lycanthrope
+     * Le fait passer à l'âge suivant et le fait mourir si le lycanthrope était déja vieux
+     */
+    public void veillir(){
+        if (this.getCategorieAge() == Lycanthrope.CategorieAge.JEUNE) {
+            this.setCategorieAge(Lycanthrope.CategorieAge.ADULTE);
+            this.setForce(this.getForce() + 10);
+            System.out.println(this.getNom() + " est maintenant adulte.");
+        } else if (this.getCategorieAge() == Lycanthrope.CategorieAge.ADULTE) {
+            this.setCategorieAge(Lycanthrope.CategorieAge.VIEUX);
+            this.setForce(Math.max(0, this.getForce() - 5));
+            System.out.println(this.getNom() + " est maintenant vieux.");
+        } else if (this.getCategorieAge() == Lycanthrope.CategorieAge.VIEUX) {
+            System.out.println(this.getNom() + " est maintenant trop vieux.");
+            this.mourir();
+        }
+    }
+
+
 }

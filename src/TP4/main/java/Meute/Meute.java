@@ -245,15 +245,8 @@ public class Meute {
             return;
         }
 
-        System.out.println(defiant.getNom() + " défie " + cible.getNom() + " pour un conflit hiérarchique !");
-        if (defiant.getForce() + defiant.getFacteurDomination() > cible.getForce() + cible.getFacteurDomination()) {
-            System.out.println(defiant.getNom() + " remporte le conflit !");
-            defiant.setRangHierarchie(cible.getRangHierarchie());
-            cible.setRangHierarchie(cible.decrementerRang(cible.getRangHierarchie()));
-        } else {
-            System.out.println(cible.getNom() + " défend son rang avec succès !");
-            defiant.setFacteurDomination(defiant.getFacteurDomination() - 1);
-        }
+        System.out.println(defiant.getNom() + " défie " + cible.getNom() + " pour un conflit hiérarchique intra-Meute!");
+        defiant.tenterDomination(cible);
     }
 
 
