@@ -1,8 +1,10 @@
 package HopitalsFantastiques;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
+import Medecins.Medecin;
 import ServicesMedicaux.ServiceMedical;
 import Creatures.Creature;
 
@@ -69,6 +71,14 @@ public class HopitalFantastique {
             for (Creature creature : service.getCreatures()) {
                 System.out.println(" - " + creature.getNom());
             }
+        }
+    }
+    public void afficherMedecins() {
+        Iterator<Creature> iterator = medecins.iterator();
+        System.out.println("Liste des médecins dans l'hôpital :");
+        while (iterator.hasNext()) {
+            Creature medecin = iterator.next();
+            System.out.println("- " + medecin.getNom());
         }
     }
 

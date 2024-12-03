@@ -121,7 +121,7 @@ public abstract class  Creature implements Medecin {
         System.out.println(nom + " s'emporte de rage !");
     }
     public void tomberMalade(Maladie maladie){
-        System.out.println(nom + "tombe malade !");
+        System.out.println(nom + " tombe malade !");
         if (estMedecin()) {
             throw new IllegalStateException(nom + " est un médecin et ne peut pas tomber malade.");
         }
