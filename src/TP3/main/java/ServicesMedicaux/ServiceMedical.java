@@ -7,7 +7,7 @@ import Maladies.Maladie;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ServiceMedical {
+public class ServiceMedical {//Faire le Budget par rapport à une formule overwride dans centre de quanrentaine et crypte
     private String nom;
     private double superficie;
     private final int CAPACITE_MAX;

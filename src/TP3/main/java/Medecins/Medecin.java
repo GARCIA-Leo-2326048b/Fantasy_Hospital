@@ -1,12 +1,10 @@
 package Medecins;
 import Creatures.Creature;
-import HopitalsFantastiques.HopitalFantastique;
 import Maladies.Maladie;
 import Maladies.MaladieType;
 import ServicesMedicaux.Budget;
 import ServicesMedicaux.ServiceMedical;
 
-import java.util.Random;
 import java.util.Scanner;
 
 public interface Medecin {

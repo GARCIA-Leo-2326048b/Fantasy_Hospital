@@ -1,9 +1,5 @@
 package HopitalsFantastiques;
 
-import Creatures.Age;
-import Creatures.Creature;
-import Creatures.Demoralisantes.Elfe;
-import Creatures.VIP.Reptilien;
 import Medecins.Medecin;
 import ServicesMedicaux.ServiceMedical;
 

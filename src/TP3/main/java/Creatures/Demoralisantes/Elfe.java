@@ -3,9 +3,6 @@ package Creatures.Demoralisantes;
 import Creatures.Age;
 import Creatures.Creature;
 import Creatures.VIP.VIP;
-import Maladies.Maladie;
-
-import java.util.List;
 
 public class Elfe extends Creature implements Demoralisante, VIP {
 
