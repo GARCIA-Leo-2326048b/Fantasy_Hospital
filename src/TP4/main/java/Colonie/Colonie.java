@@ -311,4 +311,45 @@ public class Colonie {
         System.out.println("Nombre de lycanthropes malades: " + calculerNombreMalades());
         System.out.println("Saison des amours active: " + (saisonDesAmoursActive ? "Oui" : "Non"));
     }
+
+
+    public List<Meute> getMeutes() {
+        return meutes;
+    }
+
+    public void setMeutes(List<Meute> meutes) {
+        this.meutes = meutes;
+    }
+
+    public List<Lycanthrope2> getLycanthropesSansMeute() {
+        return lycanthropesSansMeute;
+    }
+
+    public void setLycanthropesSansMeute(List<Lycanthrope2> lycanthropesSansMeute) {
+        this.lycanthropesSansMeute = lycanthropesSansMeute;
+    }
+
+    public boolean isEnCrise() {
+        return enCrise;
+    }
+
+    public void setEnCrise(boolean enCrise) {
+        this.enCrise = enCrise;
+    }
+
+    public String getNom() {
+        return nom;
+    }
+
+    public void setNom(String nom) {
+        this.nom = nom;
+    }
+
+    public boolean isSaisonDesAmoursActive() {
+        return saisonDesAmoursActive;
+    }
+
+    public void setSaisonDesAmoursActive(boolean saisonDesAmoursActive) {
+        this.saisonDesAmoursActive = saisonDesAmoursActive;
+    }
 }
