@@ -10,6 +10,7 @@ import Medecins.Medecin;
 import ServicesMedicaux.ServiceMedical;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
@@ -104,9 +105,11 @@ public abstract class  Creature implements Medecin {
         if(this instanceof Triage && service.getCreatures().size()>1){
             diminuerMoral(10);
         } else if (this instanceof VIP) {
+            System.out.println("2");
             diminuerMoral(30);
         }
         else {
+            System.out.println("3");
             diminuerMoral(20);
         }
         System.out.println(nom + " attend, le moral diminue à " + moral + ".");
@@ -124,24 +127,34 @@ public abstract class  Creature implements Medecin {
         if (estMedecin()) {
             throw new IllegalStateException(nom + " est un médecin et ne peut pas tomber malade.");
         }
-        if (!this.maladies.contains(maladie)) { // Vérifie si la maladie n'est pas déjà dans la liste
-            this.maladies.add(maladie);
-            System.out.println(this.nom + " tombe malade !");
+        // Vérifie directement si une maladie avec le même nom abrégé existe
+        for (Maladie m : this.maladies) {
+            if (m.getNomAbrege().equals(maladie.getNomAbrege())) return;
         }
-
+        this.maladies.add(maladie);
+        System.out.println(this.nom + " tombe malade !");
     }
-    public void guerir(Maladie maladie){
-        if(maladies.contains(maladie)) {
-            maladies.remove(maladie);
-            moral += 10;
-            if (moral > 100) moral = 100;
-            System.out.println(nom + " a été soigné de " + maladie.getNomComplet() + ". Moral: " + moral);
-        }
 
+    public void guerir(Maladie maladie) {
+        // Suppression sûre avec l'Iterator
+        Iterator<Maladie> iterator = this.maladies.iterator();
+        while (iterator.hasNext()) {
+            Maladie m = iterator.next();
+            if (m.getNomAbrege().equals(maladie.getNomAbrege())) {
+                iterator.remove();
+                moral += 10;
+                if (moral > 100) moral = 100;
+                System.out.println(nom + " a été soigné de " + maladie.getNomComplet() + ". Moral: " + moral);
+                return;
+            }
+        }
     }
     public void contaminer(Maladie maladie, List<Creature> autreCreatures){
+        if (autreCreatures.isEmpty()) {
+            System.out.println("Aucune créature disponible pour la contamination.");
+            return;  // Sortir si la liste est vide
+        }
         Random random = new Random();
-
         // Choisir une victime aléatoire
         Creature victime = autreCreatures.get(random.nextInt(autreCreatures.size()));
 

@@ -21,7 +21,6 @@ public class ServiceMedical {//Faire le Budget par rapport à une formule overwr
         this.superficie = superficie;
         this.CAPACITE_MAX = 15;
         this.creatures = new ArrayList<>();
-        verifierTypeCreatureDansListeCreatures();
         this.budget = budget;
         this.typeCreature = typeCreature;
     }
@@ -58,6 +57,7 @@ public class ServiceMedical {//Faire le Budget par rapport à une formule overwr
     }
 
     public void ajouterCreature(Creature creature) {
+        verifierTypeCreatureDansListeCreatures();
         if (creature.estMedecin()) {
             throw new IllegalStateException(creature.getNom() + " n'est pas une creature.");
         }
@@ -69,8 +69,6 @@ public class ServiceMedical {//Faire le Budget par rapport à une formule overwr
             }
         }
     }
-
-
 
     public void enleverCreature(Creature creature) {
         creatures.remove(creature);

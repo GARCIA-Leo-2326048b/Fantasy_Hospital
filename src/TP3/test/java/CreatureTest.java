@@ -1,13 +1,15 @@
-import static Creatures.Age.*;
-import static junit.framework.TestCase.assertEquals;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 import Creatures.Age;
 import Creatures.Bestiales.Bestiale;
 import Creatures.Bestiales.Orque;
 import Creatures.Creature;
+import Creatures.Demoralisantes.Elfe;
 import Creatures.MortVivantes.Zombie;
 import Creatures.TypeCreature;
+import Creatures.VIP.Nain;
+import Creatures.VIP.VIP;
 import Maladies.Maladie;
 import Maladies.MaladieType;
 import ServicesMedicaux.Budget;
@@ -32,8 +34,6 @@ public class CreatureTest {
         creature = new Orque("NomCreature", "M", 70, 1.75, Age.adulte, 50);
         serviceMedical = new ServiceMedical("Service",12.5, Budget.faible, TypeCreature.ORQUE);
         serviceMedical.ajouterCreature(creature);
-        maladie = new Maladie(MaladieType.DRS);
-        creature.tomberMalade(maladie);
         autresCreatures = new ArrayList<>();
     }
 
@@ -44,7 +44,6 @@ public class CreatureTest {
         assertEquals(70.0, creature.getPoids(), 0.01);
         assertEquals(1.75, creature.getTaille(), 0.01);
         assertEquals(Age.adulte, creature.getAge());
-        assertTrue(creature.getMaladies().contains(MaladieType.DRS));
     }
 
     @Test
@@ -59,7 +58,24 @@ public class CreatureTest {
     @Test
     public void testAttendre() {
         creature.attendre(serviceMedical);
-        assertEquals(50.0, creature.getMoral(), 0.01);
+        assertEquals(30.0, creature.getMoral(), 0.01);
+    }
+    @Test
+    public void testAttendreTriage() {
+
+        Orque creature2 = new Orque("NomCreature", "M", 70, 1.75, Age.adulte, 50);
+        serviceMedical.ajouterCreature(creature2);
+        creature.attendre(serviceMedical);
+        assertEquals(40.0, creature.getMoral(), 0.01);
+    }
+
+    @Test
+    public void testAttendreVIP() {
+        ServiceMedical serviceNain = new ServiceMedical("Service",12.5, Budget.faible, TypeCreature.NAIN);
+        Nain creatureVIP = new Nain("NomCreature", "M", 70, 1.75, Age.adulte, 50);
+        serviceNain.ajouterCreature(creatureVIP);
+        creatureVIP.attendre(serviceNain);
+        assertEquals(20.0, creatureVIP.getMoral(), 0.01);
     }
 
     @Test
@@ -76,6 +92,8 @@ public class CreatureTest {
     }
     @Test
     public void testTomberMaladeExistante() {
+        maladie = new Maladie(MaladieType.DRS);
+        creature.tomberMalade(maladie);
         Maladie maladieExistante = new Maladie(MaladieType.DRS);
         creature.tomberMalade(maladieExistante);
         assertEquals(1, creature.getMaladies().size());
@@ -83,14 +101,20 @@ public class CreatureTest {
 
     @Test
     public void testGuerir() {
-        creature.guerir(maladie);
+        maladie = new Maladie(MaladieType.DRS);
+        Maladie maladie2 = new Maladie(MaladieType.DRS);
+        creature.tomberMalade(maladie);
+        creature.guerir(maladie2);
         assertFalse(creature.getMaladies().contains(maladie)); // La maladie doit être retirée de la liste
         assertEquals(60, creature.getMoral()); // Le moral doit augmenter de 10
     }
 
     @Test
     public void testContaminer() {
-        Creature victime = new Zombie("Victime", "M",70, 1.75, Age.vieux, 50);
+        maladie = new Maladie(MaladieType.DRS);
+
+        creature.tomberMalade(maladie);
+        Creature victime = new Orque("Victime", "M",70, 1.75, Age.vieux, 50);
         autresCreatures.add(victime);
         
         creature.contaminer(maladie, autresCreatures);
@@ -100,6 +124,43 @@ public class CreatureTest {
 
     @Test
     public void testTrepasser() {
+        maladie = new Maladie(MaladieType.DRS);
+        creature.tomberMalade(maladie);
+        creature.trepasser(maladie,serviceMedical);
+        assertFalse(serviceMedical.getCreatures().contains(creature));
+    }
+    @Test
+    public void testTrepasserDemoralisante() {
 
+        Elfe creature1 = new Elfe("NomCreature", "M", 70, 1.75, Age.adulte, 50);
+        ServiceMedical serviceElfe = new ServiceMedical("Service",12.5, Budget.faible, TypeCreature.ELFE);
+        Elfe creature2 = new Elfe("NomCreature", "M", 70, 1.75, Age.adulte, 50);
+
+        serviceElfe.ajouterCreature(creature2);
+        serviceElfe.ajouterCreature(creature1);
+
+        maladie = new Maladie(MaladieType.DRS);
+        creature1.tomberMalade(maladie);
+
+        creature1.trepasser(maladie,serviceElfe);
+
+        assertFalse(serviceElfe.getCreatures().contains(creature1));
+        assertEquals(40.0,creature2.getMoral(),0.01);
+    }
+
+    @Test
+    public void testTrepasserMortVivant() {
+
+        Zombie creature1 = new Zombie("NomCreature", "M", 70, 1.75, Age.adulte, 50);
+        ServiceMedical serviceZombie = new ServiceMedical("Service",12.5, Budget.faible, TypeCreature.ZOMBIE);
+
+        serviceZombie.ajouterCreature(creature1);
+
+        maladie = new Maladie(MaladieType.DRS);
+        creature1.tomberMalade(maladie);
+
+        creature1.trepasser(maladie,serviceZombie);
+
+        assertTrue(serviceZombie.getCreatures().contains(creature1));
     }
 }

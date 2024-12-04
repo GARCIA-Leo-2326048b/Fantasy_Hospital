@@ -37,15 +37,11 @@ public class Maladie {
     }
 
     public void diminuerNiveau(){
-
         niveau--;
-
-
     }
 
     public boolean estLetal(){
-
         return niveau==NIVEAU_MAX;
-
     }
+
 }

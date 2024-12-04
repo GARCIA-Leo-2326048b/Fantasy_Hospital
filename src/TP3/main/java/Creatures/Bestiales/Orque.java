@@ -12,6 +12,4 @@ public class Orque extends Creature implements Bestiale, Triage {
     public Orque(String nom, String sexe, Age age) {
         super(nom,sexe,age);
     }
-
-
 }
