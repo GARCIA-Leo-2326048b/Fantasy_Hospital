@@ -57,16 +57,17 @@ public class ServiceMedical {//Faire le Budget par rapport à une formule overwr
     }
 
     public void ajouterCreature(Creature creature) {
-        verifierTypeCreatureDansListeCreatures();
+        if (!creature.getClass().getSimpleName().equalsIgnoreCase(getTypeCreature().toString())) {
+            throw new IllegalArgumentException("Il y a une créature d'un type non-correspondant à celui du service médical.");
+        }
         if (creature.estMedecin()) {
             throw new IllegalStateException(creature.getNom() + " n'est pas une creature.");
         }
-        if (creature.getClass().getSimpleName().equalsIgnoreCase(getTypeCreature().toString())) {
-            if (creatures.size() < CAPACITE_MAX ) {
+
+        if (creatures.size() < CAPACITE_MAX ) {
                 creatures.add(creature);
-            } else {
-                System.out.println("Le service " + nom + " est plein !");
-            }
+        } else {
+            System.out.println("Le service " + nom + " est plein !");
         }
     }
 
@@ -110,11 +111,4 @@ public class ServiceMedical {//Faire le Budget par rapport à une formule overwr
         this.typeCreature = typeCreature;
     }
 
-    public void verifierTypeCreatureDansListeCreatures() {
-        for (Creature creature : creatures) {
-            if(!creature.getClass().getSimpleName().equalsIgnoreCase(getTypeCreature().toString())){
-                throw new IllegalArgumentException("Il y a une créature d'un type non-correspondant à celui du service médical.");
-            }
-        }
-    }
 }

@@ -2,6 +2,7 @@ import Creatures.Age;
 import Creatures.Bestiales.Orque;
 import Creatures.Creature;
 import Creatures.TypeCreature;
+import Creatures.VIP.Reptilien;
 import Maladies.MaladieType;
 import ServicesMedicaux.Budget;
 import ServicesMedicaux.ServiceMedical;
@@ -80,33 +81,24 @@ public class ServiceMedicalTest {
 
     @Test
     public void testReviserBudget() {
-        Budget nouveauBudget = new Budget(1500); // Nouveau budget
+        Budget nouveauBudget = Budget.insuffisant; // Nouveau budget
 
         serviceMedical.reviserBudget(nouveauBudget);
 
         // Vérifier que le budget a bien été révisé
-        assertEquals(nouveauBudget, serviceMedical.getBudget());
+        assertEquals(Budget.insuffisant, serviceMedical.getBudget());
     }
 
     @Test
-    public void testVerifierTypeCreatureDansListeCreatures() {
-        serviceMedical.ajouterCreature(creature);
-
-        // Vérifier qu'aucune exception n'est levée pour des créatures du bon type
-        serviceMedical.verifierTypeCreatureDansListeCreatures();
+    public void testajouterCreatureMauvaisType() {
 
         // Test avec une créature du mauvais type
-        Creature creatureInvalide = new Creature("Creature Invalide", TypeCreature.ANIMAL);
-        serviceMedical.ajouterCreature(creatureInvalide);
+        Creature creatureInvalide = new Reptilien("Creature Invalide", "M", 70, 1.75, Age.adulte, 50);
 
         // Vérifier qu'une exception est levée
         assertThrows(IllegalArgumentException.class, () -> {
-            serviceMedical.verifierTypeCreatureDansListeCreatures();
+            serviceMedical.ajouterCreature(creatureInvalide);
         });
     }
 
-    @Test
-    public void testAfficherCaracteristiques() {
-        serviceMedical.ajouterCreature(creature);
-
-        //
+}
