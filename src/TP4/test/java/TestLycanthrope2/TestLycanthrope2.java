@@ -7,8 +7,8 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
- * Classe de test JUnit pour la classe {@link Lycanthrope2}.
- * Cette classe teste toutes les méthodes de la classe Lycanthrope2, sauf les getters et setters.
+ * Classe de test JUnit pour la classe {@link Lycanthrope2}
+ * Cette classe teste toutes les méthodes de la classe Lycanthrope2, sauf les getters et setters
  * Certains tests ne peuvent pas être vérifié directement, mais on vérifie l'affichage dans la console
  */
 public class TestLycanthrope2 {
@@ -17,7 +17,7 @@ public class TestLycanthrope2 {
     private Lycanthrope2 lycanthrope2;
 
     /**
-     * Initialisation des objets Lycanthrope2 pour les tests.
+     * Initialisation des objets Lycanthrope2 pour les tests
      */
     @BeforeEach
     public void setUp() {
