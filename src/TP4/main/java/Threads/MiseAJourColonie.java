@@ -9,6 +9,9 @@ import java.util.Random;
  * Classe qui gère les mises à jour périodiques des colonies.
  */
 public class MiseAJourColonie implements Runnable {
+
+    // Attributs
+
     private final Colonie colonie;
     private final Random random;
     private boolean isRunning = true;

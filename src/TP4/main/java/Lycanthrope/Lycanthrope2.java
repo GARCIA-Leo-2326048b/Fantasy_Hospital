@@ -3,9 +3,8 @@ package Lycanthrope;
 import Meute.Meute;
 
 /**
- * La classe Lycanthrope2 possède des caractéristiques spécifiques
- * et des comportements adaptés à sa hiérarchie sociale et ses interactions au sein
- * d'une meute.
+ * La classe Lycanthrope2 possède des caractéristiques physiques
+ * et des comportements selon sa hiérarchie sociale et ses interactions dans sa meute
  */
 public class Lycanthrope2 {
 
@@ -46,7 +45,7 @@ public class Lycanthrope2 {
     }
 
     /**
-     * Affiche les caractéristiques du lycanthrope.
+     * Affiche les caractéristiques du lycanthrope
      */
     public void afficherCaracteristiques() {
         System.out.println("Nom : " + nom);
@@ -61,9 +60,9 @@ public class Lycanthrope2 {
     }
 
     /**
-     * Permet au lycanthrope de hurler en fonction du type de hurlement.
+     * Permet au lycanthrope de hurler en fonction du type de hurlement
      *
-     * @param type Le type de hurlement (enum TypeHurlement).
+     * @param type Le type de hurlement (enum TypeHurlement)
      */
     public void hurler(TypeHurlement type) {
         switch (type) {
@@ -109,9 +108,9 @@ public class Lycanthrope2 {
     }
 
     /**
-     * Réagit à un hurlement entendu, si le lycanthrope n'est pas malade.
+     * Réagit à un hurlement entendu, si le lycanthrope n'est pas malade
      *
-     * @param hurlement Le contenu ou type du hurlement entendu.
+     * @param hurlement Le type du hurlement entendu
      */
     public void entendreHurlement(TypeHurlement hurlement) {
         if (estMalade) {
@@ -142,18 +141,18 @@ public class Lycanthrope2 {
 
 
     /**
-     * Réagit à une tentative de domination échouée.
+     * Réagit à une tentative de domination échouée
      */
     public void reagirAgression() {
         this.facteurDomination -= 1;
-        System.out.println(this.rangHierarchie + " se montre agressif après une tentative de domination.");
+        System.out.println(this.nom + " se montre agressif après une tentative de domination.");
     }
 
     /**
-     * Tente de dominer un autre lycanthrope.
+     * Tente de dominer un autre lycanthrope
      *
-     * @param cible Le lycanthrope ciblé.
-     * @return true si la domination réussit, false sinon.
+     * @param cible Le lycanthrope ciblé
+     * @return true si la domination réussit, false sinon
      */
     public boolean tenterDomination(Lycanthrope2 cible) {
         if (this.rangHierarchie == RangHierarchie.ω) {
@@ -185,15 +184,15 @@ public class Lycanthrope2 {
     }
 
     /**
-     * Vérifie si le lycanthrope doit perdre un rang à cause d'un faible facteur de domination.
+     * Vérifie si le lycanthrope doit perdre un rang à cause de son faible facteur de domination
      */
     public void verifierPerteDeRang() {
         if (this.meute == null) {
-            System.out.println(this.nom + " n'appartient à aucune meute, vérification impossible.");
+            System.out.println(this.nom + " n'appartient à aucune meute, impossible de vérifier");
             return;
         }
 
-        if (this.facteurDomination < -5) {
+        if (this.facteurDomination < -1) {
             boolean dernierDeSonRang = this.meute.getMembres().stream()
                     .filter(l -> l.getRangHierarchie() == this.rangHierarchie && l.isSexe() == this.sexe)
                     .count() == 1;
@@ -209,7 +208,7 @@ public class Lycanthrope2 {
     }
 
     /**
-     * Transforme le lycanthrope en humain.
+     * Transforme le lycanthrope en humain
      */
     public void seTransformerEnHumain() {
         System.out.println(this.nom + " tente de se transformer en humain...");

@@ -11,6 +11,8 @@ import java.util.Random;
  */
 public class MiseAJourMeute implements Runnable {
 
+    // Attributs
+
     private final Meute meute;
     private final Random random;
 
