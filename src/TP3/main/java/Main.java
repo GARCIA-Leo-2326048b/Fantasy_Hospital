@@ -1,10 +1,10 @@
-package HopitalsFantastiques;
-
 import Creatures.*;
 import Creatures.Bestiales.*;
 import Creatures.Demoralisantes.*;
 import Creatures.MortVivantes.*;
 import Creatures.VIP.*;
+import HopitalsFantastiques.GestionHopital;
+import HopitalsFantastiques.HopitalFantastique;
 import Maladies.*;
 import ServicesMedicaux.*;
 import Threads.MiseAJourCreatures;

@@ -6,6 +6,7 @@ import ServicesMedicaux.ServiceMedical;
 import java.util.Scanner;
 
 public class GestionHopital {
+
     private HopitalFantastique hopital;
     private final Scanner scanner = new Scanner(System.in);
     private final int ACTIONS_MAX = 2;
@@ -54,7 +55,6 @@ public class GestionHopital {
                 System.out.println("Vous avez quitté la gestion de l'hôpital.");
                 break;
             }
-
             int numService = demanderChoixUtilisateur(
                     "Dans quel service voulez-vous envoyer le médecin ? (Entrez son numéro)", 1, hopital.getServicesMedicaux().size());
 

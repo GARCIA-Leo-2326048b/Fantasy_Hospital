@@ -2,14 +2,12 @@
 import static org.junit.jupiter.api.Assertions.*;
 
 import Creatures.Age;
-import Creatures.Bestiales.Bestiale;
 import Creatures.Bestiales.Orque;
 import Creatures.Creature;
 import Creatures.Demoralisantes.Elfe;
 import Creatures.MortVivantes.Zombie;
 import Creatures.TypeCreature;
 import Creatures.VIP.Nain;
-import Creatures.VIP.VIP;
 import Maladies.Maladie;
 import Maladies.MaladieType;
 import ServicesMedicaux.Budget;
@@ -18,7 +16,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class CreatureTest {
