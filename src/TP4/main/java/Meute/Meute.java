@@ -20,14 +20,14 @@ public class Meute {
     private int taille; // Taille de la meute
     private boolean saisonDesAmours; // Indique si la saison des amours est active
     private int seuilForceOmega; // Seuil de force pour déterminer les omega
-    private int jeune = 0; // Compteur global pour nommer les jeunes
+    private int jeune = 0; // Compteur pour nommer les jeunes (résulatats de reproduction)
     private boolean dissoute;
 
     /**
      * Constructeur de la classe Meute.
      *
-     * @param maleAlpha       Le mâle alpha (doit être adulte et de rang α).
-     * @param femelleAlpha    La femelle alpha (doit être adulte et de rang α).
+     * @param maleAlpha       Le mâle alpha (adulte et de rang α).
+     * @param femelleAlpha    La femelle alpha (adulte et de rang α).
      * @param seuilForceOmega Le seuil de force pour déclarer un lycanthrope omega.
      * @throws IllegalArgumentException Si les critères pour le couple alpha ne sont pas respectés.
      */
@@ -64,7 +64,7 @@ public class Meute {
     }
 
     /**
-     * Affiche les caractéristiques de la meute et les informations sur ses membres.
+     * Affiche les caractéristiques de la meute
      */
     public void afficherCaracteristiques() {
         if (dissoute) {
@@ -85,7 +85,7 @@ public class Meute {
     }
 
     /**
-     * Ajoute un lycanthrope à la meute après vérification.
+     * Ajoute un lycanthrope à la meute après vérification
      *
      * @param lycanthrope Le lycanthrope à ajouter.
      * @throws IllegalArgumentException Si le lycanthrope est déjà un alpha, mort ou si la meute est dissoute.
@@ -104,7 +104,7 @@ public class Meute {
         }
 
         membres.add(lycanthrope);
-        lycanthrope.setMeute(this); // Mise à jour de la référence de meute
+        lycanthrope.setMeute(this); // Mise à jour de l'attribut de meute du lycanthrope
         taille++;
         declarerLycanthropesOmega(); // Met à jour les omega après chaque ajout
     }
@@ -116,7 +116,7 @@ public class Meute {
      */
     public void enleverLycanthrope(Lycanthrope2 lycanthrope) {
         membres.remove(lycanthrope);
-        lycanthrope.setMeute(null); // Supprime la référence de meute
+        lycanthrope.setMeute(null); // Supprime l'attribut de meute du lycanthrope
         taille--;
 
         if (lycanthrope == maleAlpha || lycanthrope == femelleAlpha) {
@@ -125,9 +125,9 @@ public class Meute {
     }
 
     /**
-     * Déclare un lycanthrope comme mort, en mettant à jour la meute si nécessaire.
+     * Déclare un lycanthrope comme mort et met à jour la meute si besoin
      *
-     * @param membre Le lycanthrope à déclarer mort.
+     * @param membre Le lycanthrope à déclarer mort
      */
     public void declarerMort(Lycanthrope2 membre) {
         membre.mourir();
@@ -135,7 +135,7 @@ public class Meute {
     }
 
     /**
-     * Réorganise le couple alpha si l'un des alpha est retiré ou décédé.
+     * Réorganise le couple alpha si l'un des alpha est retiré ou décédé
      */
     public void redefinirCoupleAlpha() {
         Lycanthrope2 nouveauMaleAlpha = null;
@@ -165,7 +165,7 @@ public class Meute {
     }
 
     /**
-     * Dissout la meute en vidant la liste des membres et en réinitialisant les attributs.
+     * Dissout la meute en vidant la liste des membres et en réinitialisant les attributs
      */
     public void dissoudreMeute() {
         for (Lycanthrope2 membre : membres) {
@@ -179,7 +179,7 @@ public class Meute {
     }
 
     /**
-     * Permet la reproduction du couple alpha.
+     * Permet la reproduction du couple alpha
      */
     public void reproduire() {
         if (!saisonDesAmours || maleAlpha == null || femelleAlpha == null || maleAlpha.isMalade() || femelleAlpha.isMalade()) {
@@ -216,7 +216,7 @@ public class Meute {
     }
 
     /**
-     * Déclare les lycanthropes omega en fonction de leur force.
+     * Déclare les lycanthropes omega par rapport à leur force
      */
     public void declarerLycanthropesOmega() {
         for (Lycanthrope2 membre : membres) {
@@ -251,7 +251,7 @@ public class Meute {
 
 
     /**
-     * Met à jour l'âge et les caractéristiques de chaque membre de la meute.
+     * Met à jour les caractéristiques de chaque membre
      */
     public void mettreAJourAgeEtCaracteristiques() {
         for (Lycanthrope2 membre : membres) {
@@ -273,7 +273,7 @@ public class Meute {
 
 
     /**
-     * Les membres de la meute hurlent collectivement en fonction d'un type de hurlement.
+     * Les membres de la meute hurlent collectivement en fonction d'un type de hurlement
      *
      * @param type Le type de hurlement (enum TypeHurlement).
      */
@@ -290,10 +290,10 @@ public class Meute {
 
 
     /**
-     * Gère une interaction entre cette meute et une autre meute.
+     * Gère une interaction entre cette meute et une autre meute
      *
-     * @param autreMeute La meute avec laquelle interagir.
-     * @param typeInteraction Le type d'interaction (alliance ou rivalité).
+     * @param autreMeute La meute avec laquelle interagir
+     * @param typeInteraction Le type d'interaction (alliance / rivalite)
      */
     public void interactionEntreMeutes(Meute autreMeute, String typeInteraction) {
         if (autreMeute == null || autreMeute.getTaille() == 0) {
@@ -321,10 +321,10 @@ public class Meute {
 
 
     /**
-     * Rétablit une meute dissoute avec un nouveau couple alpha.
+     * Rétablit une meute dissoute avec un nouveau couple alpha
      *
-     * @param nouveauMaleAlpha    Le nouveau mâle alpha.
-     * @param nouvelleFemelleAlpha La nouvelle femelle alpha.
+     * @param nouveauMaleAlpha    Le nouveau mâle alpha
+     * @param nouvelleFemelleAlpha La nouvelle femelle alpha
      */
     public void remettreEnVigueur(Lycanthrope2 nouveauMaleAlpha, Lycanthrope2 nouvelleFemelleAlpha) {
         if (!dissoute) {
@@ -388,12 +388,6 @@ public class Meute {
     public int getSeuilForceOmega() {
         return seuilForceOmega;
     }
-
-    /**
-     * Indique si la meute est dissoute.
-     *
-     * @return true si la meute est dissoute, false sinon.
-     */
     public boolean isDissoute() {
         return dissoute;
     }

@@ -7,17 +7,20 @@ import java.util.List;
 import java.util.Random;
 
 /**
- * Classe qui gère les mises à jour périodiques des lycanthropes.
+ * Classe qui gère les mises à jour lycanthropes.
  */
 public class MiseAJourLycanthrope2 implements Runnable {
+
+    // Attributs
+
     private List<Lycanthrope2> lycanthropes;
     private Random random = new Random();
     private boolean isRunning = true;
 
     /**
-     * Constructeur de la classe MiseAJourLycanthrope2.
+     * Constructeur de MiseAJourLycanthrope2
      *
-     * @param lycanthropes Liste des lycanthropes à gérer.
+     * @param lycanthropes Liste des lycanthropes à gérer
      */
     public MiseAJourLycanthrope2(List<Lycanthrope2> lycanthropes) {
         this.lycanthropes = lycanthropes;
@@ -30,9 +33,8 @@ public class MiseAJourLycanthrope2 implements Runnable {
     public void run() {
         while (isRunning) {
             try {
-                // Appel des méthodes pour gérer les différents aspects de la simulation
                 gererVieillissement();
-                Thread.sleep(10000); // Pause entre les cycles de vieillissement
+                Thread.sleep(10000); // Pause entre les vieillissement
 
                 gererMaladiesEtGuerisons();
 
@@ -44,7 +46,7 @@ public class MiseAJourLycanthrope2 implements Runnable {
 
                 gererHurlements();
 
-                // Pause générale entre chaque cycle
+                // Pause entre chaque cycle
                 Thread.sleep(5000); // 5 secondes
             } catch (InterruptedException e) {
                 System.out.println("Thread interrompu : " + e.getMessage());
@@ -54,7 +56,7 @@ public class MiseAJourLycanthrope2 implements Runnable {
     }
 
     /**
-     * Gère le vieillissement des lycanthropes.
+     * Gère le vieillissement des lycanthropes
      */
     private void gererVieillissement() {
         for (Lycanthrope2 lycanthrope : lycanthropes) {
@@ -63,7 +65,7 @@ public class MiseAJourLycanthrope2 implements Runnable {
     }
 
     /**
-     * Gère les maladies et guérisons des lycanthropes.
+     * Gère les maladies et guérisons des lycanthropes
      */
     private void gererMaladiesEtGuerisons() {
         for (Lycanthrope2 lycanthrope : lycanthropes) {

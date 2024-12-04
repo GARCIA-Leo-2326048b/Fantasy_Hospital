@@ -11,21 +11,22 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * La classe Colonie représente un ensemble de meutes et de lycanthropes sans meute.
+ * La classe Colonie représente un ensemble de meutes et de lycanthropes sans meute
  */
 public class Colonie {
 
     // Attributs
+
     private List<Meute> meutes; // Liste des meutes
-    private List<Lycanthrope2> lycanthropesSansMeute; // Liste des lycanthropes sans meute
+    private List<Lycanthrope2> lycanthropesSansMeute; // Liste des lycanthropes solitaire (sans meute)
     private String nom; // Nom de la colonie
     private boolean enCrise; // Indique si la colonie est en crise
     private boolean saisonDesAmoursActive; // Indique si la saison des amours est active
 
     /**
-     * Constructeur de la classe Colonie.
+     * Constructeur de la classe Colonie
      *
-     * @param nom Nom ou identifiant unique de la colonie.
+     * @param nom Nom de la colonie
      */
     public Colonie(String nom) {
         this.nom = nom;
@@ -38,7 +39,7 @@ public class Colonie {
     // Gestion des meutes
 
     /**
-     * Ajoute une meute à la colonie.
+     * Ajoute une meute à la Colonie
      *
      * @param meute La meute à ajouter.
      */
@@ -50,10 +51,9 @@ public class Colonie {
     }
 
     /**
-     * Supprime une meute de la colonie et redistribue ses membres
-     * parmi les lycanthropes sans meute.
+     * Supprime une meute de la colonie et redistribue ses membres dans les lycanthropes sans meute
      *
-     * @param meute La meute à supprimer.
+     * @param meute La meute à supprimer
      */
     public void supprimerMeute(Meute meute) {
         if (meutes.remove(meute)) {
@@ -63,8 +63,8 @@ public class Colonie {
     }
 
     /**
-     * Fusionne deux meutes, ajoutant les membres de la deuxième dans la première
-     * et dissolvant la deuxième.
+     * Fusionne deux meutes
+     * Ajoute les membres de la deuxième dans la première et dissout la deuxième
      *
      * @param meute1 La meute qui accueille les lycanthropes.
      * @param meute2 La meute à fusionner et à dissoudre.
@@ -80,9 +80,9 @@ public class Colonie {
     }
 
     /**
-     * Dissout une meute et transfère ses membres parmi les lycanthropes sans meute.
+     * Dissout une meute et transfère ses membres dans les lycanthropes sans meute
      *
-     * @param meute La meute à dissoudre.
+     * @param meute La meute à dissoudre
      */
     public void dissoudreMeute(Meute meute) {
         if (meutes.contains(meute)) {
@@ -106,7 +106,7 @@ public class Colonie {
     }
 
     /**
-     * Redistribue les lycanthropes sans meute dans les meutes existantes.
+     * Redistribue les lycanthropes sans meute dans les meutes de la colonie
      */
     public void redistribuerLycanthropesSansMeute() {
         for (Lycanthrope2 lycanthrope : new ArrayList<>(lycanthropesSansMeute)) {
@@ -119,13 +119,13 @@ public class Colonie {
                 }
             }
         }
-        verifierEtatCrise(); // Vérifie si la redistribution modifie l'état de crise
+        verifierEtatCrise(); // Vérifie cela modifie l'état de crise
     }
 
-    // Saisons et hurlements
+    // Saisons
 
     /**
-     * Active la saison des amours dans toutes les meutes de la colonie.
+     * Active la saison des amours dans toutes les meutes de la colonie
      */
     public void activerSaisonDesAmours() {
         saisonDesAmoursActive = true;
@@ -144,10 +144,13 @@ public class Colonie {
         }
     }
 
+
+    // Hurlements
+
     /**
      * Déclenche un hurlement collectif dans toutes les meutes de la colonie.
      *
-     * @param type Le type de hurlement.
+     * @param type Le type de hurlement
      */
     public void hurlementCollectif(TypeHurlement type) {
         for (Meute meute : meutes) {
@@ -155,12 +158,12 @@ public class Colonie {
         }
     }
 
-    // Statistiques et analyses
+    // Stats et analyses
 
     /**
-     * Calcule la population totale de la colonie.
+     * Calcule la population totale de la colonie
      *
-     * @return Le nombre total de lycanthropes dans la colonie.
+     * @return Le nombre total de lycanthropes dans la colonie
      */
     public int calculerPopulationTotale() {
         int total = lycanthropesSansMeute.size();
@@ -179,10 +182,12 @@ public class Colonie {
         return meutes.size();
     }
 
+
+
     /**
-     * Répartit les lycanthropes par rang hiérarchique dans la colonie.
+     * Répartit les lycanthropes par rang hiérarchique dans la colonie
      *
-     * @return Une carte des rangs et leur fréquence.
+     * @return Une carte des rangs et leur fréquence
      */
     public Map<RangHierarchie, Integer> repartirParRangs() {
         Map<RangHierarchie, Integer> repartition = new HashMap<>();
@@ -199,13 +204,13 @@ public class Colonie {
         return repartition;
     }
 
-    // Interactions et crises
+    // Interactions / Crises
 
     /**
      * Gère une interaction entre cette colonie et une autre.
      *
      * @param autreColonie    L'autre colonie impliquée.
-     * @param typeInteraction Le type d'interaction (alliance ou rivalité).
+     * @param typeInteraction Le type d'interaction (alliance / rivalite)
      */
     public void gererInteractionEntreColonies(Colonie autreColonie, Interaction typeInteraction) {
         if (typeInteraction == Interaction.Alliance) {
@@ -217,9 +222,6 @@ public class Colonie {
         }
     }
 
-
-
-    // Gestion de la crise
 
     /**
      * Vérifie si la colonie doit être en crise en fonction du nombre
@@ -286,18 +288,14 @@ public class Colonie {
     // Méthodes utilitaires
 
     /**
-     * Vérifie si la colonie est en crise.
+     * Vérifie si la colonie est en crise
      *
-     * @return true si la colonie est en crise, false sinon.
+     * @return true si la colonie est en crise, sinon false
      */
     public boolean estEnCrise() {
         return enCrise;
     }
 
-
-
-
-    // Méthodes utilitaires
 
     /**
      * Affiche les statistiques de la colonie, y compris l'état de crise et le nombre de malades.
@@ -310,5 +308,46 @@ public class Colonie {
         System.out.println("Colonie en crise: " + (enCrise ? "Oui" : "Non"));
         System.out.println("Nombre de lycanthropes malades: " + calculerNombreMalades());
         System.out.println("Saison des amours active: " + (saisonDesAmoursActive ? "Oui" : "Non"));
+    }
+
+
+    public List<Meute> getMeutes() {
+        return meutes;
+    }
+
+    public void setMeutes(List<Meute> meutes) {
+        this.meutes = meutes;
+    }
+
+    public List<Lycanthrope2> getLycanthropesSansMeute() {
+        return lycanthropesSansMeute;
+    }
+
+    public void setLycanthropesSansMeute(List<Lycanthrope2> lycanthropesSansMeute) {
+        this.lycanthropesSansMeute = lycanthropesSansMeute;
+    }
+
+    public boolean isEnCrise() {
+        return enCrise;
+    }
+
+    public void setEnCrise(boolean enCrise) {
+        this.enCrise = enCrise;
+    }
+
+    public String getNom() {
+        return nom;
+    }
+
+    public void setNom(String nom) {
+        this.nom = nom;
+    }
+
+    public boolean isSaisonDesAmoursActive() {
+        return saisonDesAmoursActive;
+    }
+
+    public void setSaisonDesAmoursActive(boolean saisonDesAmoursActive) {
+        this.saisonDesAmoursActive = saisonDesAmoursActive;
     }
 }
