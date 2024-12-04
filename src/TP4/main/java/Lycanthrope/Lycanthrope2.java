@@ -176,9 +176,11 @@ public class Lycanthrope2 {
         this.facteurDomination += 1;
         cible.facteurDomination -= 1;
 
-        RangHierarchie tempRang = this.rangHierarchie;
-        this.rangHierarchie = cible.rangHierarchie;
-        cible.rangHierarchie = tempRang;
+        if (this.rangHierarchie.ordinal() > cible.rangHierarchie.ordinal()) {
+            RangHierarchie tempRang = this.rangHierarchie;
+            this.rangHierarchie = cible.rangHierarchie;
+            cible.rangHierarchie = tempRang;
+        }
 
         return true;
     }

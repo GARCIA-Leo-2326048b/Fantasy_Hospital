@@ -408,4 +408,19 @@ public class Meute {
         return nombreMalades;
     }
 
+    /**
+     * Indique le nombre de Lycantrope2 omega
+     *
+     * @return le nombre de omega dans la Meute
+     */
+    public int getNombreOmega(){
+        int nombreOmega = 0;
+        for(Lycanthrope2 membre : membres){
+            if (membre.getRangHierarchie().equals(RangHierarchie.ψ)){
+                nombreOmega++;
+            }
+        }
+        return nombreOmega;
+    }
+
 }
